@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEditor;
 public class BaseAlcohol : MonoBehaviour
 {
     public enum AlcoholType
@@ -14,8 +14,12 @@ public class BaseAlcohol : MonoBehaviour
         MAX
     }
 
+
+
     [SerializeField]
     private Text textData_;
+    [SerializeField]
+    private Image icon_;
     public string alcoholName_;
     public int alcoholDegree_;   //アルコール度数
     public int capacity_;       //容量
@@ -29,5 +33,8 @@ public class BaseAlcohol : MonoBehaviour
         alcoholDegree_ = degree;
         price_ = price;
         type_ = (AlcoholType)type;
+        string pathName = Application.dataPath + "/Textures/" + AlcoholData.SpritePath[type];
+        icon_.sprite = LoadSpriteData.LoadSprite(pathName);
+
     }
 }

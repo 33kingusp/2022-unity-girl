@@ -34,12 +34,12 @@ public class BarController : MonoBehaviour
             alcoholInfo.SetInfo(AlcoholData.AlcoholName[i], AlcoholData.AlcoholDegree[i], AlcoholData.AlcoholPrice[i], i);
             //‰Ÿ‚µ‚½Û‚Ìˆ—‚ğ“o˜^‚·‚é
             Button button = obj.GetComponent<Button>();
-            button.onClick.AddListener(() => { PushButton(alcoholInfo); });
+            button.onClick.AddListener(() => { PushButton(alcoholInfo,button); });
         }
     }
 
     //‚¨ğƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½Û‚Ìˆ—
-    public void PushButton(BaseAlcohol info)
+    public void PushButton(BaseAlcohol info,Button button)
     {
         PlayerInfoManager.instance.moneyValue.Value -= info.price_;
         PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree_; ;
