@@ -13,7 +13,10 @@ namespace Utilities
     {
         public static SceneTransitionManager Instance { private set; get; }
 
-        [SerializeField] private CanvasGroup transitionGroup = default;
+        [SerializeField] private CanvasGroup _transitionGroup = default;
+
+        public IObservable<string> OnLoadedSceneAsObservable { get { return _onLoadedScene; } }
+        private Subject<string> _onLoadedScene = default;
 
         private void Awake()
         {
@@ -29,13 +32,35 @@ namespace Utilities
             }
         }
 
+        private void OnEnable()
+        {
+            _onLoadedScene = new Subject<string>();
+        }
+
+        private void OnDisable()
+        {
+            _onLoadedScene.Dispose();
+        }    
+
+        /// <summary>
+        /// フェードイン・アウトと共にシーン遷移します
+        /// </summary>
+        /// <param name="sceneName"></param>
+        /// <param name="fadeTime"></param>
+        public void LoadSceneWithFade(string sceneName, float fadeTime = 2.0f)
+        {
+            LoadSceneAsObservable(sceneName, fadeTime)
+                .Subscribe()
+                .AddTo(gameObject);
+        }
+
         /// <summary>
         /// シーンを切り替える
         /// </summary>
         /// <param name="sceneName">読み込むシーン名</param>
         /// <param name="fadeTime">フェードイン・アウトにかかる時間</param>
         /// <returns></returns>
-        public IObservable<Unit> LoadScneAsObservable(string sceneName, float fadeTime = 2.0f)
+        public IObservable<Unit> LoadSceneAsObservable(string sceneName, float fadeTime = 2.0f)
         {
             return Observable.FromCoroutine<Unit>((observer) => LoadScneneCoroutine(observer, sceneName, fadeTime));
         }
@@ -55,6 +80,8 @@ namespace Utilities
 
             yield return FadeOut(fadeTime);
 
+            _onLoadedScene.OnNext(sceneName);
+
             yield break;
         }
 
@@ -66,17 +93,17 @@ namespace Utilities
         private IEnumerator FadeIn(float time = 1.0f)
         {
             float t = 0;
-            transitionGroup.blocksRaycasts = true;
+            _transitionGroup.blocksRaycasts = true;
 
             while(t <= time)
             {
-                transitionGroup.alpha = t / time;
+                _transitionGroup.alpha = t / time;
 
                 yield return null;
                 t += Time.deltaTime;
             }
 
-            transitionGroup.alpha = 1;
+            _transitionGroup.alpha = 1;
         }
 
         /// <summary>
@@ -88,18 +115,18 @@ namespace Utilities
         {
             float t = 0;
 
-            transitionGroup.blocksRaycasts = true;
+            _transitionGroup.blocksRaycasts = true;
 
             while (t <= time)
             {
-                transitionGroup.alpha = 1 - t / time;
+                _transitionGroup.alpha = 1 - t / time;
 
                 yield return null;
                 t += Time.deltaTime;
             }
-            transitionGroup.alpha = 0;
+            _transitionGroup.alpha = 0;
 
-            transitionGroup.blocksRaycasts = false;
+            _transitionGroup.blocksRaycasts = false;
         }
     }
 }
