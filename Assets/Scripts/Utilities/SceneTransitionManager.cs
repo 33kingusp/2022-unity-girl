@@ -10,7 +10,7 @@ namespace Utilities
 {
     public class SceneTransitionManager : MonoBehaviour
     {
-        public static SceneTransitionManager Instance { private set; get; }
+        public static SceneTransitionManager Instance { private set; get; } = default;
 
         [SerializeField] private CanvasGroup _transitionGroup = default;
 
@@ -46,10 +46,10 @@ namespace Utilities
 
         private void OnDisable()
         {
-            _onLoadedScene.Dispose();
-            _onFinishedFadeIn.Dispose();
-            _onFinishedFadeOut.Dispose();
-        }    
+            _onLoadedScene?.Dispose();
+            _onFinishedFadeIn?.Dispose();
+            _onFinishedFadeOut?.Dispose();
+        }  
 
         /// <summary>
         /// フェードイン・アウトと共にシーン遷移する

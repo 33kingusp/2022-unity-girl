@@ -27,9 +27,10 @@ namespace Utilities
             }
         }
 
-        public void PlayBGM(AudioClip bgmClip)
+        public void PlayBGM(AudioClip bgmClip, bool isLoop = true)
         {
             _bgmAudioSource.Stop();
+            _bgmAudioSource.loop = isLoop;
             _bgmAudioSource.clip = bgmClip;
             _bgmAudioSource.Play();
         }
@@ -50,9 +51,9 @@ namespace Utilities
         /// <param name="bgmClip">再生するBGM</param>
         /// <param name="fadeTime">フェードインする時間</param>
         /// <returns></returns>
-        public IObservable<Unit> PlayBGMAsObservable(AudioClip bgmClip, float fadeTime = 0f)
+        public IObservable<Unit> PlayBGMAsObservable(AudioClip bgmClip, float fadeTime = 0f, bool isLoop = true)
         {
-            return Observable.FromCoroutine<Unit>(observer => PlayBGMCoroutine(observer, bgmClip, fadeTime));
+            return Observable.FromCoroutine<Unit>(observer => PlayBGMCoroutine(observer, bgmClip, fadeTime, isLoop));
         }
 
         /// <summary>
@@ -66,11 +67,12 @@ namespace Utilities
         }
 
 
-        private IEnumerator PlayBGMCoroutine(IObserver<Unit> observer, AudioClip bgmClip, float fadeTime)
+        private IEnumerator PlayBGMCoroutine(IObserver<Unit> observer, AudioClip bgmClip, float fadeTime, bool isLoop = true)
         {
             float t = 0;
 
             _bgmAudioSource.volume = 0;
+            _bgmAudioSource.loop = isLoop;
             _bgmAudioSource.clip = bgmClip;
             _bgmAudioSource.Play();
 

@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 using UniRx;
 using UniRx.Triggers;
 using Data;
+using Logics;
+using Utilities;
 
 namespace Bars
 {
@@ -19,11 +21,9 @@ namespace Bars
         private GameObject buttonObj_;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
 
-        // Start is called before the first frame update
         void Start()
         {
             CreateAlcoholButton();
-
         }
 
         // Update is called once per frame
@@ -93,6 +93,7 @@ namespace Bars
             //強制的にシーン遷移を行う処理
             if (CheckBarClose() || CheckDrunkValue())
             {
+                GameLogicManager.instance.NextPhase();
                 //シーン遷移を行い、家に帰る
             }
 

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Utilities;
+using Data;
 
 namespace Logics
 {
@@ -47,6 +49,8 @@ namespace Logics
             CurrentPhase = GamePhase.Work;
             OnBeginWorkPhase();
             _onChangeCurrentPhase.OnNext(CurrentPhase);
+            AudioManager.Instance.StopBGM(1.5f);
+            SceneTransitionManager.Instance.LoadSceneWithFade("MiniGameScene", 2f);
         }
 
         /// <summary>
@@ -59,14 +63,18 @@ namespace Logics
                 CurrentPhase = GamePhase.Bar;
                 OnBeginBarPhase();
                 _onChangeCurrentPhase.OnNext(CurrentPhase);
+                AudioManager.Instance.StopBGM(1.5f);
+                SceneTransitionManager.Instance.LoadSceneWithFade("BarScene", 2f);
             }
             else if (CurrentPhase == GamePhase.Bar)
             {
                 CurrentPhase = GamePhase.Home;
                 OnBeginHomePhase();
                 _onChangeCurrentPhase.OnNext(CurrentPhase);
+                AudioManager.Instance.StopBGM(1.5f);
+                SceneTransitionManager.Instance.LoadSceneWithFade("HomeScene", 2f);
             }
-            if (CurrentPhase == GamePhase.Home)
+            else if (CurrentPhase == GamePhase.Home)
             {
                 NextTurn();
             }
