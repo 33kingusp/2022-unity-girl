@@ -45,6 +45,5 @@ public class BarController : MonoBehaviour
         PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree_; ;
         PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree_; ;
         PlayerInfoManager.instance.currentTime.Value++;
-        Debug.LogError(button);
     }
 }
