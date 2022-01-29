@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using UniRx;
+using UniRx.Triggers;
 
 public class PlayerInfoController : MonoBehaviour
 {
     [SerializeField]
     private Text gameTurnCount_;  //ゲームのターン数(プレイヤーが持つ？)
     [SerializeField]
-    private Text emotionvalue_ ;  //ネガポジの値
+    private Text emotionValue_ ;  //ネガポジの値
     [SerializeField]
     private Text usingMoney_;    //使える金額
     [SerializeField]
@@ -23,8 +26,9 @@ public class PlayerInfoController : MonoBehaviour
     void Start()
     {
         gameTurnCount_.text = PlayerInfoManager.instance.gameTurnCount.ToString();
-        emotionvalue_.text = PlayerInfoManager.instance.emotionValue.ToString();
+        emotionValue_.text = PlayerInfoManager.instance.emotionValue.ToString();
         usingMoney_.text = PlayerInfoManager.instance.usingMoney.ToString();
+        PlayerInfoManager.instance.usingMoney.Subscribe(_ => usingMoney_.text = _.ToString());
     }
 
     // Update is called once per frame

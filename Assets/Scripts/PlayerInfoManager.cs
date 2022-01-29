@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class PlayerInfoManager : SingletonMonoBehaviour<PlayerInfoManager>
 {
-    private int gameTurnCount_=5;  //ゲームのターン数(プレイヤーが持つ？)
+    private ReactiveProperty<int> gameTurnCount_=new ReactiveProperty<int>(5);  //ゲームのターン数(プレイヤーが持つ？)
     private int emotionvalue_=50;  //ネガポジの値
-    private int usingMoney_=1000;    //使える金額
-    public int gameTurnCount
+    private IntReactiveProperty usingMoney_ =new IntReactiveProperty(5000);    //使える金額
+    public ReactiveProperty<int> gameTurnCount
     {
         get
         {
@@ -29,7 +30,7 @@ public class PlayerInfoManager : SingletonMonoBehaviour<PlayerInfoManager>
             emotionvalue_ = value;
         }
     }
-    public int usingMoney
+    public IntReactiveProperty usingMoney
     {
         get
         {
