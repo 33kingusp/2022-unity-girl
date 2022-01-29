@@ -31,13 +31,19 @@ public class BarController : MonoBehaviour
             obj.transform.localScale = Vector3.one;
             //‚¨ğ‚Ìî•ñ‚ğ“o˜^‚·‚é
             BaseAlcohol alcoholInfo = obj.GetComponent<BaseAlcohol>();
-            alcoholInfo.SetInfo("‚¨ğ", 10, 1000, i);
+            alcoholInfo.SetInfo(AlcoholData.AlcoholName[i], AlcoholData.AlcoholDegree[i], AlcoholData.AlcoholPrice[i], i);
+            //‰Ÿ‚µ‚½Û‚Ìˆ—‚ğ“o˜^‚·‚é
+            Button button = obj.GetComponent<Button>();
+            button.onClick.AddListener(() => { PushButton(alcoholInfo); });
         }
-        
     }
 
-    void PushButton()
+    //‚¨ğƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½Û‚Ìˆ—
+    public void PushButton(BaseAlcohol info)
     {
-        
+        PlayerInfoManager.instance.moneyValue.Value -= info.price_;
+        PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree_; ;
+        PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree_; ;
+        PlayerInfoManager.instance.currentTime.Value++;
     }
 }
