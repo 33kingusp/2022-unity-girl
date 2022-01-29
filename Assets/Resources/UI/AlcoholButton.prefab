@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59bea094fbc883547ad3470171ed80ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textData_: {fileID: 6661806032547701822}
   alcoholName_: 
   alcoholDegree_: 0
   capacity_: 0

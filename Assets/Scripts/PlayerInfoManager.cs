@@ -5,10 +5,13 @@ using UniRx;
 
 public class PlayerInfoManager : SingletonMonoBehaviour<PlayerInfoManager>
 {
-    private ReactiveProperty<int> gameTurnCount_=new ReactiveProperty<int>(5);  //ゲームのターン数(プレイヤーが持つ？)
-    private int emotionvalue_=50;  //ネガポジの値
-    private IntReactiveProperty usingMoney_ =new IntReactiveProperty(5000);    //使える金額
-    public ReactiveProperty<int> gameTurnCount
+    private IntReactiveProperty gameTurnCount_ =new IntReactiveProperty(0);  //ゲームのターン数(プレイヤーが持つ？)
+    private IntReactiveProperty drunkValue_ =new IntReactiveProperty(0);  //酔い値
+    private IntReactiveProperty moneyValue_ =new IntReactiveProperty(10000);    //予算
+    private IntReactiveProperty stressValue_ =new IntReactiveProperty(30);    //ストレス
+
+    private IntReactiveProperty currentTime_ =new IntReactiveProperty(18);    //現在時刻
+    public IntReactiveProperty gameTurnCount
     {
         get
         {
@@ -19,29 +22,50 @@ public class PlayerInfoManager : SingletonMonoBehaviour<PlayerInfoManager>
             gameTurnCount_ = value;
         }
     }
-    public int emotionValue
+    public IntReactiveProperty drunkValue
     {
         get
         {
-            return emotionvalue_;
+            return drunkValue_;
         }
         set
         {
-            emotionvalue_ = value;
+            drunkValue_ = value;
         }
     }
-    public IntReactiveProperty usingMoney
+    public IntReactiveProperty moneyValue
     {
         get
         {
-            return usingMoney_;
+            return moneyValue_;
         }
         set
         {
-            usingMoney_ = value;
+            moneyValue_ = value;
         }
     }
-
+    public IntReactiveProperty currentTime
+    {
+        get
+        {
+            return currentTime_;
+        }
+        set
+        {
+            currentTime_ = value;
+        }
+    }
+    public IntReactiveProperty stressValue
+    {
+        get
+        {
+            return stressValue_;
+        }
+        set
+        {
+            stressValue_ = value;
+        }
+    }
     public void SetUp()
     {
         //PlayerInfoの表示
