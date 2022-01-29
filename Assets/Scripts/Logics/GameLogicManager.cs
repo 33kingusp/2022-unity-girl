@@ -6,7 +6,7 @@ using UniRx;
 
 namespace Logics
 {
-    public class GameLogicsManager : SingletonMonoBehaviour<GameLogicsManager>
+    public class GameLogicManager : SingletonMonoBehaviour<GameLogicManager>
     {
         private const int AttendanceTime = 9; // oĞŠÔ
         private const int LeaveTime = 18; // ‘ŞĞŠÔ
