@@ -10,26 +10,29 @@ namespace Data
 {
     public class PlayerInfoController : MonoBehaviour
     {
+        private const float OneHourAngle = 30.0f;
+        private const float HalfHourAngle = 180.0f;
+
         [SerializeField]
         private Text gameTurnCount_;  //ゲームのターン数(プレイヤーが持つ？)
         [SerializeField]
-        private Text drunkValue_;  //酔い値
+        private RectTransform hourRect_;
+
         [SerializeField]
-        private Text stressValue_;    //ストレス値
-        [SerializeField]
-        private Text moneyValue_;    //使える金額
-        [SerializeField]
-        private Text currentTime;    //現在の時刻
+        private Slider stressSlider_;
+
+        private int maxGageValue_;
 
 
         // Start is called before the first frame update
         void Start()
         {
+            //UI値変更時にCanvas上のUIも変更処理を行う
+
             PlayerInfoManager.instance.gameTurnCount.Subscribe(_ => gameTurnCount_.text = _.ToString());
-            PlayerInfoManager.instance.drunkValue.Subscribe(_ => drunkValue_.text = _.ToString());
-            PlayerInfoManager.instance.moneyValue.Subscribe(_ => moneyValue_.text = _.ToString());
-            PlayerInfoManager.instance.stressValue.Subscribe(_ => stressValue_.text = _.ToString());
-            PlayerInfoManager.instance.currentTime.Subscribe(_ => currentTime.text = _.ToString());
+            PlayerInfoManager.instance.currentTime.Subscribe(_=>MoveHandClock(_));
+            PlayerInfoManager.instance.stressValue.Subscribe(_ => UpdateStressGage(_));
+            maxGageValue_ = PlayerInfoManager.instance.stressValue.Value;
         }
 
         //シーン遷移時にプレイヤー情報を初期化(引き継ぎ)を行う
@@ -42,5 +45,21 @@ namespace Data
             PlayerInfoManager.instance.currentTime.Value = 18;
         }
 
+        //時計の針を動かす
+        void MoveHandClock(int value)
+        {
+            hourRect_.localEulerAngles = new Vector3(0, 0, HalfHourAngle - OneHourAngle * value);
+        }
+
+        //ストレスゲージを更新
+        void UpdateStressGage(int value)
+        {
+            float per = (float)value / (float)maxGageValue_;
+            stressSlider_.value = per;
+            if(value<=0)
+            {
+                stressSlider_.transform.GetChild(1).gameObject.SetActive(false);
+            }
+        }
     }
 }
