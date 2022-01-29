@@ -2,7 +2,8 @@
     "name": "Utilities",
     "rootNamespace": "",
     "references": [
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:6bfd52ff30ab4434cab111ef22673b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

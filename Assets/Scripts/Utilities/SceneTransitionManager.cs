@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 namespace Utilities
 {
-    // TODO:真面目にシングルトン化
     public class SceneTransitionManager : MonoBehaviour
     {
         public static SceneTransitionManager Instance { private set; get; }
@@ -17,6 +16,12 @@ namespace Utilities
 
         public IObservable<string> OnLoadedSceneAsObservable { get { return _onLoadedScene; } }
         private Subject<string> _onLoadedScene = default;
+
+        public IObservable<string> OnFinishedFadeInAsObservable { get { return _onFinishedFadeIn; } }
+        private Subject<string> _onFinishedFadeIn = default;
+
+        public IObservable<string> OnFinishedFadeOutAsObservable { get { return _onFinishedFadeOut; } }
+        private Subject<string> _onFinishedFadeOut = default;
 
         private void Awake()
         {
@@ -35,15 +40,19 @@ namespace Utilities
         private void OnEnable()
         {
             _onLoadedScene = new Subject<string>();
+            _onFinishedFadeIn = new Subject<string>();
+            _onFinishedFadeOut = new Subject<string>();
         }
 
         private void OnDisable()
         {
             _onLoadedScene.Dispose();
+            _onFinishedFadeIn.Dispose();
+            _onFinishedFadeOut.Dispose();
         }    
 
         /// <summary>
-        /// フェードイン・アウトと共にシーン遷移します
+        /// フェードイン・アウトと共にシーン遷移する
         /// </summary>
         /// <param name="sceneName"></param>
         /// <param name="fadeTime"></param>
@@ -60,28 +69,30 @@ namespace Utilities
         /// <param name="sceneName">読み込むシーン名</param>
         /// <param name="fadeTime">フェードイン・アウトにかかる時間</param>
         /// <returns></returns>
-        public IObservable<Unit> LoadSceneAsObservable(string sceneName, float fadeTime = 2.0f)
+        private IObservable<Unit> LoadSceneAsObservable(string sceneName, float fadeTime = 2.0f)
         {
             return Observable.FromCoroutine<Unit>((observer) => LoadScneneCoroutine(observer, sceneName, fadeTime));
         }
 
         private IEnumerator LoadScneneCoroutine(IObserver<Unit> observer, string sceneName, float fadeTime)
         {
-            var async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-
             yield return FadeIn(fadeTime);
+
+            var async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
 
             while (!async.isDone)
             {
-                yield return null;                     
+                yield return null;
             }
+
+            _onLoadedScene.OnNext(sceneName);
 
             yield return new WaitForSeconds(1f);                 
 
             yield return FadeOut(fadeTime);
 
-            _onLoadedScene.OnNext(sceneName);
-
+            _onFinishedFadeOut.OnNext(sceneName);
+            
             yield break;
         }
 
@@ -93,6 +104,8 @@ namespace Utilities
         private IEnumerator FadeIn(float time = 1.0f)
         {
             float t = 0;
+
+            _transitionGroup.interactable = true;
             _transitionGroup.blocksRaycasts = true;
 
             while(t <= time)
@@ -115,6 +128,7 @@ namespace Utilities
         {
             float t = 0;
 
+            _transitionGroup.interactable = true;
             _transitionGroup.blocksRaycasts = true;
 
             while (t <= time)
@@ -124,8 +138,9 @@ namespace Utilities
                 yield return null;
                 t += Time.deltaTime;
             }
-            _transitionGroup.alpha = 0;
 
+            _transitionGroup.alpha = 0;
+            _transitionGroup.interactable = false;
             _transitionGroup.blocksRaycasts = false;
         }
     }
