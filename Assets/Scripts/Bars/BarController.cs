@@ -14,7 +14,7 @@ namespace Bars
 {
     public class BarController : MonoBehaviour
     {
-        private const int CloseBarTime = 24;       //帰宅時間
+        private const int CloseActionCount = 6;       //帰宅時間
         private const int GiveUpDrunkValue = 50;    //酔いの限界値
 
         [SerializeField]
@@ -112,7 +112,7 @@ namespace Bars
         //帰宅時間かどうか
         private bool CheckBarClose()
         {
-            if (PlayerInfoManager.instance.currentTime.Value < CloseBarTime)
+            if (PlayerInfoManager.instance.currentTime.Value < CloseActionCount)
             {
                 return false;
             }
