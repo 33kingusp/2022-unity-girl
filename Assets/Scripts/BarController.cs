@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.EventSystems;
 
 public class BarController : MonoBehaviour
 {
@@ -45,5 +46,7 @@ public class BarController : MonoBehaviour
         PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree_; ;
         PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree_; ;
         PlayerInfoManager.instance.currentTime.Value++;
+        //ƒ{ƒ^ƒ“‚Ì‘I‘ğ‰ğœ‚·‚éˆ×‚Ìˆ—
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }
