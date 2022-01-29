@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 6424822390327040975}
   - component: {fileID: 6424822390327040968}
   - component: {fileID: -1322274913923680488}
+  - component: {fileID: -2681365752160534111}
   m_Layer: 8
   m_Name: paper_black
   m_TagString: black
@@ -192,3 +193,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.27, y: 2.46}
   m_EdgeRadius: 0
+--- !u!114 &-2681365752160534111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6424822390327040969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f96980dd87aecd498846639416fd754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paperInfo: []
