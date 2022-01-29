@@ -48,7 +48,7 @@ namespace Data
         //時計の針を動かす
         void MoveHandClock(int value)
         {
-            hourRect_.localEulerAngles = new Vector3(0, 0, HalfHourAngle - OneHourAngle * value);
+            hourRect_.localEulerAngles = new Vector3(0, 0, - OneHourAngle * value);
         }
 
         //ストレスゲージを更新

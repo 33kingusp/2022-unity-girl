@@ -13,7 +13,7 @@ namespace Data
         private IntReactiveProperty moneyValue_ = new IntReactiveProperty(10000);    //ó\éZ
         private IntReactiveProperty stressValue_ = new IntReactiveProperty(30);    //ÉXÉgÉåÉX
 
-        private IntReactiveProperty actionCount_ = new IntReactiveProperty(0);    //åªç›éûçè
+        private IntReactiveProperty actionCount_ = new IntReactiveProperty(18);    //åªç›éûçè
         public IntReactiveProperty gameTurnCount
         {
             get

@@ -12,11 +12,13 @@ namespace Bars
 {
     public class BarController : MonoBehaviour
     {
-        private const int CloseActionCount = 6;       //帰宅時間
+        private const int CloseActionCount = 24;       //帰宅時間
         private const int GiveUpDrunkValue = 50;    //酔いの限界値
 
         [SerializeField]
         private GameObject buttonObj_;
+        [SerializeField]
+        private Text gameText_;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
 
         // Start is called before the first frame update
@@ -43,7 +45,7 @@ namespace Bars
                 obj.transform.localScale = Vector3.one;
                 //お酒の情報を登録する
                 BaseAlcohol alcoholInfo = obj.GetComponent<BaseAlcohol>();
-                alcoholInfo.SetInfo(AlcoholData.AlcoholName[i], AlcoholData.AlcoholDegree[i], AlcoholData.AlcoholPrice[i], i);
+                alcoholInfo.SetInfo(AssetDataPath.AlcoholName[i], AssetDataPath.AlcoholDegree[i], AssetDataPath.AlcoholPrice[i], i);
                 //押した際の処理を登録する
                 Button button = obj.GetComponent<Button>();
                 button.onClick.AddListener(() => { PushButton(alcoholInfo, button); });
@@ -85,6 +87,8 @@ namespace Bars
             PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree_; ;
             PlayerInfoManager.instance.currentTime.Value++;
 
+            //メッセージを更新する
+            gameText_.text=ViewGameMessage(info);
 
             if (useExitButton(button))
             {
@@ -127,5 +131,12 @@ namespace Bars
             }
             return true;
         }
+
+        //押したボタンに応じてメッセージを変更する
+        string ViewGameMessage(BaseAlcohol alcohol)
+        {
+            return AssetDataPath.GameLog[(int)alcohol.type_];
+        }
+
     }
 }
