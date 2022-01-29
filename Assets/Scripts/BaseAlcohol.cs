@@ -7,10 +7,12 @@ public class BaseAlcohol : MonoBehaviour
 {
     public enum AlcoholType
     {
+        WATER,
         BEER,     //ビール
         WINE,     //ワイン
         SHOCHU,   //焼酎
         SAKE,     //日本酒
+        EXIT,      //退出
         MAX
     }
 
