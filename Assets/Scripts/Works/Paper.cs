@@ -7,11 +7,13 @@ namespace Works
 {
     public class Paper : MonoBehaviour
     {
-        private GameObject clickedDownGameObject;
+        private GameObject clickedDownGameObject;   // クリックダウン時オブジェクト
+        [SerializeField] private GameObject[] paperInfo; // 紙情報配列
 
         // Start is called before the first frame update
         void Start()
         {
+
         }
 
         // Update is called once per frame
@@ -21,7 +23,7 @@ namespace Works
             if (Input.GetMouseButtonDown(0))
             {
                 clickedDownGameObject = null;   // オブジェクト初期化
-                                                // レイを飛ばしてオブジェクト取得
+                // レイを飛ばしてオブジェクト取得
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit2d = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction);
                 // オブジェクト取得できた場合
@@ -29,7 +31,7 @@ namespace Works
                 {
                     clickedDownGameObject = hit2d.collider.gameObject;  // オブジェクト情報格納
                     int Paper = 8;  // Paper layer number
-                                    // Paperのみオブジェクト情報を保持する
+                    // Paperのみオブジェクト情報を保持する
                     if (clickedDownGameObject.layer != Paper)
                     {
                         clickedDownGameObject = null;
@@ -53,16 +55,18 @@ namespace Works
                         //オブジェクトが見つかったときの処理
                         if (hit)
                         {
-                            // クリックダウン時と同じなら処理を飛ばす
+                            // クリックダウン時と同じオブジェクトなら処理を飛ばす
                             if (hit.collider.gameObject == clickedDownGameObject) { continue; }
                             GameObject clickedGameObject = hit.collider.gameObject; // オブジェクト情報取得
                             GameObject Game = GameObject.Find("Game");  // Game オブジェクト取得
                             MiniGameManager main = Game.GetComponent<MiniGameManager>();      // GameオブジェクトのMainスクリプト取得
-                                                                        // クリックダウン時のタグと、クリックアップ時のタグが一致するとき
+
+                            // クリックダウン時のタグと、クリックアップ時のタグが一致するとき
                             if (clickedGameObject.tag == clickedDownGameObject.tag)
                             {
                                 main.changeScore(1);    // スコアアップ
                             }
+                            // 一致しない時
                             else
                             {
                                 main.changeScore(-1);   // スコアダウン
