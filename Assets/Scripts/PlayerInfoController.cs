@@ -30,9 +30,14 @@ public class PlayerInfoController : MonoBehaviour
         PlayerInfoManager.instance.currentTime.Subscribe(_ => currentTime.text = _.ToString());
     }
 
-    // Update is called once per frame
-    void Update()
+    //シーン遷移時にプレイヤー情報を初期化(引き継ぎ)を行う
+    public static void InitializeValue(int turn,int drunk,int money,int stress)
     {
-        
+        PlayerInfoManager.instance.gameTurnCount.Value = turn;
+        PlayerInfoManager.instance.drunkValue.Value = drunk;
+        PlayerInfoManager.instance.moneyValue.Value = money;
+        PlayerInfoManager.instance.stressValue.Value = stress;
+        PlayerInfoManager.instance.currentTime.Value = 18;
     }
+
 }
