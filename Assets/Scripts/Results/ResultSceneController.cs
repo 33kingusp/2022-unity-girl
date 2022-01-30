@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UniRx;
 using Utilities;
 using Logics;
-
+using Data;
 namespace Results
 {
     public class ResultSceneController : MonoBehaviour
@@ -47,7 +47,7 @@ namespace Results
 
             _nextButton.interactable = false;
 
-            //StartCoroutine(EndingBeginFlow());
+            PlayerInfoManager.instance.Clean();
         }
 
         private void NextMessage()
@@ -59,6 +59,7 @@ namespace Results
             }
             else
             {
+                _nextButton.interactable = false;
                 _messageText.text = "";
                 StartCoroutine(EndingEndFlow());
             }
@@ -66,8 +67,6 @@ namespace Results
 
         private IEnumerator EndingBeginFlow()
         {
-            Debug.Log("EndingBeginFlow");
-
             if (_currentEnding.EndSound != null)
             {
                 AudioManager.Instance.PlaySE(_currentEnding.EndSound);
