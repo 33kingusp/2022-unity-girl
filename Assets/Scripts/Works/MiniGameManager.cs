@@ -101,6 +101,7 @@ namespace Works
             if(text_time <= 0 && !gameOver)
             {
                 gameOver = true;
+                GameLogicManager.instance.SetGameScore(score);
                 GameLogicManager.instance.NextPhase();
             }
         }
