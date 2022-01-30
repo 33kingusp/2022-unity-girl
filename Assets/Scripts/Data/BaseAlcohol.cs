@@ -39,7 +39,7 @@ namespace Data
             alcoholDegree_ = degree;
             price_ = price;
             type_ = (AlcoholType)type;
-            string pathName = Application.dataPath + "/Textures/" + AssetDataPath.SpritePath[type];
+            string pathName =AssetDataPath.TexturesFile + AssetDataPath.AlcoholBtnSprite[type];
             icon_.sprite = LoadSpriteData.LoadSprite(pathName);
 
         }
