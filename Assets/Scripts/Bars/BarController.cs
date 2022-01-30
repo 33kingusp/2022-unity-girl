@@ -123,7 +123,9 @@ namespace Bars
             }
             else
             {
-                PlayerInfoManager.instance.drunkValue.Value += (int)(info.alcoholDegree * magDegree_);
+                int magValue = (int)(info.alcoholDegree * magDegree_);
+                PlayerInfoManager.instance.drunkValue.Value += magValue;
+
             }
             if (PlayerInfoManager.instance.stressValue.Value > 0)
             {
@@ -237,14 +239,18 @@ namespace Bars
             {
                 firstFlag_ = false;
                 magDegree_ = 1.0f;
+                prevType_ = info.type;
                 return;
             }
             if (info.type != prevType_)
             {
                 magDegree_ = 1.5f;
-                prevType_ = info.type;
+            }else
+            {
+                magDegree_ = 1.0f;
+
             }
-            magDegree_ = 1.0f;
+            prevType_ = info.type;
         }
         //ƒ{ƒ^ƒ“‚ð‰Ÿ‚¹‚é‚©‚Ç‚¤‚©
         void PushButtonCheck(bool flag, Button button)

@@ -54,10 +54,6 @@ namespace Data
         {
             float per = (float)value / (float)PlayerInfoManager.instance.maxStressValue;
             stressSlider_.value = per;
-            if(value<=0)
-            {
-                stressSlider_.transform.GetChild(1).gameObject.SetActive(false);
-            }
         }
     }
 }
