@@ -17,7 +17,7 @@ MonoBehaviour:
   _endCardsprites:
   - {fileID: 21300000, guid: 0d90008eef1ff6445939fd67aa59a418, type: 3}
   - {fileID: 21300000, guid: 683cb95a22b32ab44924b0933daee003, type: 3}
-  _endSound: {fileID: 8300000, guid: 4739b0543b012427d8d8f8555de01ef4, type: 3}
+  _endSound: {fileID: 8300000, guid: bcad94c095815e84694ae9e416e3d8d6, type: 3}
   _messages:
   - "\uFF17\u9023\u52E4\u304C\u3093\u3070\u3063\u305F\u3088\uFF01"
   - "\u3044\u3048\uFF5E\u3044"

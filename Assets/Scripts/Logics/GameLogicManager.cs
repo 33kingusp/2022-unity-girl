@@ -59,13 +59,13 @@ namespace Logics
             SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
                 .Where(scene => scene == "TitleScene")
                 .First()
-                .Subscribe(_ => 
+                .Subscribe(_ =>
                 {
                     CurrentTurn = 0;
                     CurrentEndingId = 0;
                     CurrentPhase = GamePhase.Work;
                 }
-                ).AddTo(gameObject);            
+                ).AddTo(gameObject);
         }
 
         public void SetGameScore(int score)
@@ -184,7 +184,7 @@ namespace Logics
             float drunk = Mathf.Max(PlayerInfoManager.instance.drunkValue.Value - ad, 0);
             PlayerInfoManager.instance.drunkValue.Value = (int)drunk;
         }
-    
+
         private bool IsFinishedGame()
         {
             if (PlayerInfoManager.instance.drunkValue.Value >= 60)
