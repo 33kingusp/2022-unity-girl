@@ -23,6 +23,8 @@ namespace Results
 
         private void Start()
         {
+            Debug.Log("Start");
+
             foreach (var sprites in _ending.EndCardsprites)
             {
                 var image = Instantiate(_rawImageBase, _imageParent);
@@ -36,12 +38,15 @@ namespace Results
                 .Subscribe(_ => NextMessage())
                 .AddTo(gameObject);
 
+            
             SceneTransitionManager.Instance.OnFinishedFadeOutAsObservable
                 .First()
                 .Subscribe(_ => StartCoroutine(EndingBeginFlow()))
                 .AddTo(gameObject);
 
             _nextButton.interactable = false;
+
+            //StartCoroutine(EndingBeginFlow());
         }
 
         private void NextMessage()
@@ -60,11 +65,12 @@ namespace Results
 
         private IEnumerator EndingBeginFlow()
         {
+            Debug.Log("EndingBeginFlow");
+
             if (_ending.EndSound != null)
             {
                 AudioManager.Instance.PlaySE(_ending.EndSound);
             }
-
             yield return FadeIn();
 
             NextMessage();

@@ -51,13 +51,6 @@ namespace Utilities
             _onFinishedFadeOut?.Dispose();
         }
 
-        private void Start()
-        {
-            // デバッグ用
-            _onLoadedScene.OnNext(SceneManager.GetActiveScene().name);
-            _onFinishedFadeOut.OnNext(SceneManager.GetActiveScene().name);
-        }
-
         /// <summary>
         /// フェードイン・アウトと共にシーン遷移する
         /// </summary>
