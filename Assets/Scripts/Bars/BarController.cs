@@ -41,8 +41,11 @@ namespace Bars
         private Image charaImg_;
         [SerializeField]
         private Image drinkImage_;
+        [SerializeField]
+        private AudioClip drinkSE_ = default;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
         private bool firstFlag_ = true;     
+
 
         private BaseAlcohol.AlcoholType prevType_=BaseAlcohol.AlcoholType.WATER;
 
@@ -275,13 +278,11 @@ namespace Bars
         IEnumerator DrinkViewOpen(int no)
         {
             drinkImage_.transform.parent.gameObject.SetActive(true);
-
+            AudioManager.Instance.PlaySE(drinkSE_);
             drinkImage_.sprite = drinkSprite_[no];
             yield return new WaitForSeconds(3f);
 
             drinkImage_.transform.parent.gameObject.SetActive(false);
-
-
         }
     }
     
