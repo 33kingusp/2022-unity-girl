@@ -120,7 +120,7 @@ namespace Logics
         private void OnBeginWorkPhase()
         {
             // 時間を出社時間に設定
-            PlayerInfoManager.instance.currentTime.Value = AttendanceTime;
+            PlayerInfoManager.instance.actionCount.Value = AttendanceTime;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Logics
         private void OnBeginBarPhase()
         {
             // 時間を退社時間に設定
-            PlayerInfoManager.instance.currentTime.Value = LeaveTime;
+            PlayerInfoManager.instance.actionCount.Value = LeaveTime;
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Logics
         private void OnBeginHomePhase()
         {
             // 早めに帰った際に得られる時間
-            int addSleepTime = 24 - PlayerInfoManager.instance.currentTime.Value;
+            int addSleepTime = 24 - PlayerInfoManager.instance.actionCount.Value;
             // 出社までの時間
             int sleepTime = AttendanceTime + addSleepTime;
             // アルコールは1時間あたり3.75%抜ける
