@@ -16,6 +16,7 @@ namespace Logics
 
         public int CurrentTurn { private set; get; } = 0;
         public GamePhase CurrentPhase { private set; get; } = GamePhase.Home;
+        public int CurrentEndingId { private set; get; } = 0;
 
         /// <summary>
         /// フェイズの遷移を通知
@@ -46,8 +47,24 @@ namespace Logics
                 .AddTo(gameObject);
 
             CurrentTurn = 0;
+            CurrentEndingId = 0;
             CurrentPhase = GamePhase.Work;
             NextTurn();
+        }
+
+        public void EndGame()
+        {
+            SceneTransitionManager.Instance.LoadSceneWithFade("TitleScene", 3f);
+            SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
+                .Where(scene => scene == "TitleScene")
+                .First()
+                .Subscribe(_ => 
+                {
+                    CurrentTurn = 0;
+                    CurrentEndingId = 0;
+                    CurrentPhase = GamePhase.Work;
+                }
+                ).AddTo(gameObject);            
         }
 
         /// <summary>
@@ -95,18 +112,27 @@ namespace Logics
             else if (CurrentPhase == GamePhase.Bar)
             {
                 AudioManager.Instance.StopBGM(1.5f);
-                SceneTransitionManager.Instance.LoadSceneWithFade("HomeScene", 2f);
 
-                SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
-                    .Where(scene => scene == "HomeScene")
-                    .First()
-                    .Subscribe(_ =>
-                    {
-                        CurrentPhase = GamePhase.Home;
-                        OnBeginHomePhase();
-                        _onChangeCurrentPhase.OnNext(CurrentPhase);
-                    })
-                    .AddTo(gameObject);
+                if (IsFinishedGame())
+                {
+                    //終了処理
+                    SceneTransitionManager.Instance.LoadSceneWithFade("ResultScene", 2f);
+                }
+                else
+                {
+                    SceneTransitionManager.Instance.LoadSceneWithFade("HomeScene", 2f);
+
+                    SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
+                        .Where(scene => scene == "HomeScene")
+                        .First()
+                        .Subscribe(_ =>
+                        {
+                            CurrentPhase = GamePhase.Home;
+                            OnBeginHomePhase();
+                            _onChangeCurrentPhase.OnNext(CurrentPhase);
+                        })
+                        .AddTo(gameObject);
+                }
             }
             else if (CurrentPhase == GamePhase.Home)
             {
@@ -128,8 +154,11 @@ namespace Logics
         /// </summary>
         private void OnBeginBarPhase()
         {
+            // TODO:仕事の結果を引き継ぐ            
             // 時間を退社時間に設定
             PlayerInfoManager.instance.actionCount.Value = LeaveTime;
+            PlayerInfoManager.instance.drunkValue.Value = 0;
+            PlayerInfoManager.instance.stressValue.Value += 30;
         }
 
         /// <summary>
@@ -145,6 +174,30 @@ namespace Logics
             float ad = AlcoholDecompositionPerHour * sleepTime;
             float drunk = Mathf.Max(PlayerInfoManager.instance.drunkValue.Value - ad, 0);
             PlayerInfoManager.instance.drunkValue.Value = (int)drunk;
+        }
+    
+        private bool IsFinishedGame()
+        {
+            if (PlayerInfoManager.instance.drunkValue.Value >= 60)
+            {
+                // 酔い度がやばい
+                CurrentEndingId = 0;
+                return true;
+            }
+            else if (CurrentTurn >= 7 && PlayerInfoManager.instance.stressValue.Value < 5)
+            {
+                // 7連勤後にストレス5以下
+                CurrentEndingId = 1;
+                return true;
+            }
+            else if (PlayerInfoManager.instance.stressValue.Value >= 100)
+            {
+                // ストレスがやばい
+                CurrentEndingId = 2;
+                return true;
+            }
+
+            return false;
         }
     }
 }

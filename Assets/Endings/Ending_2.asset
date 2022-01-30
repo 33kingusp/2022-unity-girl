@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cbc4860b76aa6479f85fcd74bf2671, type: 3}
+  m_Name: Ending_2
+  m_EditorClassIdentifier: 
+  _id: 2
+  _endName: "\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\uFF1A\u3080\u308A\u307D"
+  _endCardsprites:
+  - {fileID: 21300000, guid: 28f4a296d0af6e04db8c008296046102, type: 3}
+  - {fileID: 21300000, guid: 3bab1bb370b1a0d478ee3829c33d9c25, type: 3}
+  _endSound: {fileID: 0}
+  _messages:
+  - "\u3042\u3078\u3047"
+  - "\u3082\u3045\u30DE\u30C2\u7121\u7406"
+  - "\u3049\u3057\u3054\u3068\u3083\u3081\u3087"
+  - "\u304A\u308F\u308A"
