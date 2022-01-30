@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 6076443959529863228}
   - component: {fileID: 6076443959529863231}
   - component: {fileID: 6076443959529863229}
+  - component: {fileID: -6740925742866212028}
   m_Layer: 0
   m_Name: tray_black
   m_TagString: black
@@ -359,6 +360,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.44, y: 1.87}
   m_EdgeRadius: 0
+--- !u!210 &-6740925742866212028
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6076443959529863230}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &7522440668114515855
 GameObject:
   m_ObjectHideFlags: 0

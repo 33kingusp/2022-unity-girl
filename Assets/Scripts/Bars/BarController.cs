@@ -14,25 +14,37 @@ namespace Bars
 {
     public class BarController : MonoBehaviour
     {
+        enum DrunkMode
+        {
+            NORMAL,
+            SOFT,
+            HARD,
+            MAX
+        }
+
         private const int CloseActionCount = 24;       //帰宅時間
-        private const int GiveUpDrunkValue = 50;    //酔いの限界値
+        private static readonly int[] GiveUpDrunkValue = { 0,18,36,50 } ;    //酔いの限界値
 
         [SerializeField]
         private GameObject buttonObj_;
         [SerializeField]
         private Text gameText_;
+        [SerializeField]
+        private Sprite[] alcoholBtnSprite_;
+        [SerializeField]
+        private Sprite[] btnBackSprite_;
+        [SerializeField]
+        private Sprite[] charaSprite_;
+        [SerializeField]
+        private Image charaImg_;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
 
         void Start()
         {
             CreateAlcoholButton();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
 
         }
+
 
 
         void CreateAlcoholButton()
@@ -45,7 +57,7 @@ namespace Bars
                 obj.transform.localScale = Vector3.one;
                 //お酒の情報を登録する
                 BaseAlcohol alcoholInfo = obj.GetComponent<BaseAlcohol>();
-                alcoholInfo.SetInfo(AssetDataPath.AlcoholName[i], AssetDataPath.AlcoholDegree[i], AssetDataPath.AlcoholPrice[i], i);
+                alcoholInfo.SetInfo(AssetDataPath.AlcoholName[i], AssetDataPath.AlcoholDegree[i], AssetDataPath.AlcoholPrice[i], i,alcoholBtnSprite_[i]);
                 //押した際の処理を登録する
                 Button button = obj.GetComponent<Button>();
                 button.onClick.AddListener(() => { PushButton(alcoholInfo, button); });
@@ -59,12 +71,12 @@ namespace Bars
                         if (flag)
                         {
                             button.interactable = true;
-                            button.transform.GetComponent<Image>().sprite= Utilities.LoadSpriteData.LoadSprite(AssetDataPath.BtnPush);
+                            button.transform.GetComponent<Image>().sprite = btnBackSprite_[0];
                         }
                         else
                         {
                             button.interactable = false;
-                            button.transform.GetComponent<Image>().sprite = Utilities.LoadSpriteData.LoadSprite(AssetDataPath.BtnNotPush);
+                            button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
 
                         }
                     });
@@ -89,6 +101,7 @@ namespace Bars
             PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree; ;
             PlayerInfoManager.instance.actionCount.Value++;
 
+            DrunkCharacterImage();
             //退出ボタン以外の情報は保持する
             if(info.type!=BaseAlcohol.AlcoholType.EXIT)
             {
@@ -103,7 +116,7 @@ namespace Bars
                 exitButtonFlag_.Value = true;
             }
             //強制的にシーン遷移を行う処理
-            if (CheckBarClose() || CheckDrunkValue())
+            if (CheckBarClose() || CheckDrunkValue()||info.type==BaseAlcohol.AlcoholType.EXIT)
             {
                 GameLogicManager.instance.NextPhase();
                 //シーン遷移を行い、家に帰る
@@ -134,7 +147,7 @@ namespace Bars
         //酔いが限界かどうか
         private bool CheckDrunkValue()
         {
-            if (PlayerInfoManager.instance.drunkValue.Value < GiveUpDrunkValue)
+            if (PlayerInfoManager.instance.drunkValue.Value < GiveUpDrunkValue[(int)DrunkMode.MAX])
             {
                 return false;
             }
@@ -147,5 +160,19 @@ namespace Bars
             return AssetDataPath.GameLog[(int)alcohol.type];
         }
 
+        //酔い値に応じてキャラクターのイラストを切り替える
+        void DrunkCharacterImage()
+        {
+            for (int i = 0; i < (int)DrunkMode.MAX; i++)
+            {
+                if (PlayerInfoManager.instance.drunkValue.Value > GiveUpDrunkValue[i])
+                {
+                    charaImg_.sprite = charaSprite_[i];
+                }else
+                {
+                    break;
+                }
+            }
+        }
     }
 }
