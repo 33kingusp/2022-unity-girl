@@ -38,7 +38,11 @@ namespace Bars
         [SerializeField]
         private Image charaImg_;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
+        private bool firstFlag_ = true;     
 
+        private BaseAlcohol.AlcoholType prevType_=BaseAlcohol.AlcoholType.WATER;
+
+        private float magDegree_;          //お酒の倍率
         void Start()
         {
             CreateAlcoholButton();
@@ -75,11 +79,23 @@ namespace Bars
                         }
                         else
                         {
-                            button.interactable = false;
-                            button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
+                            if (PlayerInfoManager.instance.moneyValue.Value < AssetDataPath.AlcoholPrice[(int)BaseAlcohol.AlcoholType.BEER])
+                            {
+                                button.interactable = true;
+                                button.transform.GetComponent<Image>().sprite = btnBackSprite_[0];
+                            }
+                            else
+                            {
+                                button.interactable = false;
+                                button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
+                            }
 
                         }
                     });
+                }
+                else
+                {
+                    //PushButtonCheck(PlayerInfoManager.instance.moneyValue.Value >= alcoholInfo.price, button);
                 }
             }
         }
@@ -89,29 +105,50 @@ namespace Bars
         {
             //ボタンの選択解除する為の処理
             EventSystem.current.SetSelectedGameObject(null);
-            //もし所持金が足りなかったら
+
+            //メッセージを更新する
+            gameText_.text = ViewGameMessage(info);
+            //金額が足りない場合は処理をしない
             if (PlayerInfoManager.instance.moneyValue.Value - info.price < 0)
             {
-                //ボタンクリックの処理は行わない
                 return;
             }
+            //別のお酒を飲んだ場合の処理
+            DrinkAncoholType(info);
 
             PlayerInfoManager.instance.moneyValue.Value -= info.price;
-            PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree; ;
-            PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree; ;
+            if (prevType_ == BaseAlcohol.AlcoholType.WATER)
+            {
+                PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree;
+            }
+            else
+            {
+                PlayerInfoManager.instance.drunkValue.Value += (int)(info.alcoholDegree * magDegree_);
+            }
+            if (PlayerInfoManager.instance.stressValue.Value > 0)
+            {
+                PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree;
+                //マイナスになったら0に戻す
+                if (PlayerInfoManager.instance.stressValue.Value < 0)
+                {
+                    PlayerInfoManager.instance.stressValue.Value = 0;
+                }
+            }
             PlayerInfoManager.instance.actionCount.Value++;
 
+            //PlayerInfo更新後の処理
+
+            //キャラクターの画像の切り替え判定
             DrunkCharacterImage();
+
+
             //退出ボタン以外の情報は保持する
             if (info.type != BaseAlcohol.AlcoholType.EXIT)
             {
                 PlayerInfoManager.instance.drinkTypeList.Add((int)info.type);
             }
-
-            //メッセージを更新する
-            gameText_.text = ViewGameMessage(info);
-
-            if (useExitButton(button))
+            //退出ボタンの状態を切り替える
+            if (useExitButton(button) || PlayerInfoManager.instance.moneyValue.Value < AssetDataPath.AlcoholPrice[(int)BaseAlcohol.AlcoholType.BEER])
             {
                 exitButtonFlag_.Value = true;
             }
@@ -121,7 +158,6 @@ namespace Bars
                 GameLogicManager.instance.NextPhase();
                 //シーン遷移を行い、家に帰る
             }
-
         }
 
         //退出ボタンを押せる状態かどうか
@@ -157,6 +193,23 @@ namespace Bars
         //押したボタンに応じてメッセージを変更する
         string ViewGameMessage(BaseAlcohol alcohol)
         {
+            if(PlayerInfoManager.instance.moneyValue.Value<alcohol.price)
+            {
+                return AssetDataPath.NotPushLog[(int)alcohol.type];
+
+            }
+
+          if(PlayerInfoManager.instance.moneyValue.Value < AssetDataPath.AlcoholPrice[(int)BaseAlcohol.AlcoholType.BEER])
+            {
+                if(alcohol.type==BaseAlcohol.AlcoholType.EXIT)
+                {
+                    return AssetDataPath.GameLog[(int)alcohol.type];
+                }else
+                {
+                    return AssetDataPath.NotPushLog[(int)alcohol.type];
+
+                }
+            }
             return AssetDataPath.GameLog[(int)alcohol.type];
         }
 
@@ -175,5 +228,39 @@ namespace Bars
                 }
             }
         }
+
+        
+        //前と飲んだお酒と同じ種類だったら
+        void DrinkAncoholType(BaseAlcohol info)
+        {
+            if (firstFlag_)
+            {
+                firstFlag_ = false;
+                magDegree_ = 1.0f;
+                return;
+            }
+            if (info.type != prevType_)
+            {
+                magDegree_ = 1.5f;
+                prevType_ = info.type;
+            }
+            magDegree_ = 1.0f;
+        }
+        //ボタンを押せるかどうか
+        void PushButtonCheck(bool flag, Button button)
+        {
+            if (flag)
+            {
+                button.interactable = true;
+                button.transform.GetComponent<Image>().sprite = btnBackSprite_[0];
+            }
+            else
+            {
+                button.interactable = false;
+                button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
+            }
+        }
     }
+    
+
 }

@@ -9,19 +9,25 @@ namespace Works
     {
         private GameObject clickedDownGameObject;   // クリックダウン時オブジェクト
         [SerializeField] private GameObject[] paperInfo; // 紙情報配列
-        private Vector3 defaultPos  = new Vector3(7.0f,  1.5f, -1.0f);     // 初期座標
-        private Vector3 defaultPos2 = new Vector3(7.0f, -2.5f, -1.0f);     // 初期座標2
+        private Vector3 defaultPos = new Vector3(4.5f,  0.5f, -1.0f);
+        private Vector3 defaultPos2 = new Vector3(4.5f, -3.0f, -1.0f);
         private Vector3 tmpPos = new Vector3(7.0f, 1.5f, -1.0f);           // 座標保存用
+        private MiniGameManager main;
+        private bool gameOver = false;
 
         // Start is called before the first frame update
         void Start()
         {
-            tmpPos = new Vector3(7.0f, 1.5f, -1.0f);
+            tmpPos = defaultPos;
+            GameObject Game = GameObject.Find("Game");  // Game オブジェクト取得
+            main = Game.GetComponent<MiniGameManager>();      // GameオブジェクトのMainスクリプト取得
         }
 
         // Update is called once per frame
         void Update()
         {
+            gameOver = main.getGameOver();
+            if(gameOver) { return; }    // ゲームオーバーなら処理を終える
             // クリックダウン時 - クリックしたオブジェクト情報の保持
             if (Input.GetMouseButtonDown(0))
             {
@@ -35,18 +41,9 @@ namespace Works
                     if(hit2d.collider.gameObject == this.gameObject)
                     {
                         clickedDownGameObject = hit2d.collider.gameObject;  // オブジェクト情報格納
-                        /*int Paper = 8;  // Paper layer number
-                                        // Paperのみオブジェクト情報を保持する
-                        if (clickedDownGameObject.layer != Paper)
-                        {
-                            clickedDownGameObject = null;
-                        }
-                        else*/
-                        {
-                            if (defaultPos == clickedDownGameObject.transform.position
-                            || defaultPos2 == clickedDownGameObject.transform.position)
-                                tmpPos = clickedDownGameObject.transform.position;
-                        }
+                        if (defaultPos == clickedDownGameObject.transform.position
+                         || defaultPos2 == clickedDownGameObject.transform.position)
+                            tmpPos = clickedDownGameObject.transform.position;
                     }
                 }
             }
@@ -72,8 +69,6 @@ namespace Works
                             // レイヤーがトレー以外なら処理を飛ばす
                             if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Tray")) { continue; }
                             GameObject clickedGameObject = hit.collider.gameObject; // オブジェクト情報取得
-                            GameObject Game = GameObject.Find("Game");  // Game オブジェクト取得
-                            MiniGameManager main = Game.GetComponent<MiniGameManager>();      // GameオブジェクトのMainスクリプト取得
 
                             // クリックダウン時のタグと、クリックアップ時のタグが一致するとき
                             if (clickedGameObject.tag == clickedDownGameObject.tag)
@@ -85,8 +80,9 @@ namespace Works
                             {
                                 main.changeScore(-1);   // スコアダウン
                             }
+                            main.paperAnim(clickedGameObject.tag);    // スコアアップ
                             main.createPaper(tmpPos);   // 新しい紙を生成
-                            tmpPos = new Vector3(7.0f, 1.5f, -1);
+                            tmpPos = defaultPos;
                             Destroy(clickedDownGameObject); // Paperオブジェクト削除
                             break;
                         }
