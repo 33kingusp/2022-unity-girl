@@ -9,11 +9,14 @@ namespace Works
     {
         private GameObject clickedDownGameObject;   // クリックダウン時オブジェクト
         [SerializeField] private GameObject[] paperInfo; // 紙情報配列
+        private Vector3 defaultPos  = new Vector3(7.0f,  1.5f, -1.0f);     // 初期座標
+        private Vector3 defaultPos2 = new Vector3(7.0f, -2.5f, -1.0f);     // 初期座標2
+        private Vector3 tmpPos = new Vector3(7.0f, 1.5f, -1.0f);           // 座標保存用
 
         // Start is called before the first frame update
         void Start()
         {
-
+            tmpPos = new Vector3(7.0f, 1.5f, -1.0f);
         }
 
         // Update is called once per frame
@@ -29,12 +32,21 @@ namespace Works
                 // オブジェクト取得できた場合
                 if (hit2d)
                 {
-                    clickedDownGameObject = hit2d.collider.gameObject;  // オブジェクト情報格納
-                    int Paper = 8;  // Paper layer number
-                    // Paperのみオブジェクト情報を保持する
-                    if (clickedDownGameObject.layer != Paper)
+                    if(hit2d.collider.gameObject == this.gameObject)
                     {
-                        clickedDownGameObject = null;
+                        clickedDownGameObject = hit2d.collider.gameObject;  // オブジェクト情報格納
+                        /*int Paper = 8;  // Paper layer number
+                                        // Paperのみオブジェクト情報を保持する
+                        if (clickedDownGameObject.layer != Paper)
+                        {
+                            clickedDownGameObject = null;
+                        }
+                        else*/
+                        {
+                            if (defaultPos == clickedDownGameObject.transform.position
+                            || defaultPos2 == clickedDownGameObject.transform.position)
+                                tmpPos = clickedDownGameObject.transform.position;
+                        }
                     }
                 }
             }
@@ -57,6 +69,8 @@ namespace Works
                         {
                             // クリックダウン時と同じオブジェクトなら処理を飛ばす
                             if (hit.collider.gameObject == clickedDownGameObject) { continue; }
+                            // レイヤーがトレー以外なら処理を飛ばす
+                            if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Tray")) { continue; }
                             GameObject clickedGameObject = hit.collider.gameObject; // オブジェクト情報取得
                             GameObject Game = GameObject.Find("Game");  // Game オブジェクト取得
                             MiniGameManager main = Game.GetComponent<MiniGameManager>();      // GameオブジェクトのMainスクリプト取得
@@ -71,6 +85,8 @@ namespace Works
                             {
                                 main.changeScore(-1);   // スコアダウン
                             }
+                            main.createPaper(tmpPos);   // 新しい紙を生成
+                            tmpPos = new Vector3(7.0f, 1.5f, -1);
                             Destroy(clickedDownGameObject); // Paperオブジェクト削除
                             break;
                         }
