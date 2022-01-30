@@ -49,7 +49,7 @@ namespace Utilities
             _onLoadedScene?.Dispose();
             _onFinishedFadeIn?.Dispose();
             _onFinishedFadeOut?.Dispose();
-        }  
+        }
 
         /// <summary>
         /// フェードイン・アウトと共にシーン遷移する
