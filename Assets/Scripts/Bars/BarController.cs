@@ -19,11 +19,12 @@ namespace Bars
             NORMAL,
             SOFT,
             HARD,
+            GIVE,
             MAX
         }
 
         private const int CloseActionCount = 24;       //帰宅時間
-        private static readonly int[] GiveUpDrunkValue = { 0, 18, 36, 50 };    //酔いの限界値
+        private static readonly int[] GiveUpDrunkValue = { 0,9, 23, 36, 50 };    //酔いの限界値
 
         [SerializeField]
         private GameObject buttonObj_;
@@ -36,9 +37,16 @@ namespace Bars
         [SerializeField]
         private Sprite[] charaSprite_;
         [SerializeField]
+        private Sprite[] drinkSprite_;
+        [SerializeField]
         private Image charaImg_;
+        [SerializeField]
+        private Image drinkImage_;
+        [SerializeField]
+        private AudioClip drinkSE_ = default;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
         private bool firstFlag_ = true;     
+
 
         private BaseAlcohol.AlcoholType prevType_=BaseAlcohol.AlcoholType.WATER;
 
@@ -123,7 +131,9 @@ namespace Bars
             }
             else
             {
-                PlayerInfoManager.instance.drunkValue.Value += (int)(info.alcoholDegree * magDegree_);
+                int magValue = (int)(info.alcoholDegree * magDegree_);
+                PlayerInfoManager.instance.drunkValue.Value += magValue;
+
             }
             if (PlayerInfoManager.instance.stressValue.Value > 0)
             {
@@ -145,6 +155,7 @@ namespace Bars
             //退出ボタン以外の情報は保持する
             if (info.type != BaseAlcohol.AlcoholType.EXIT)
             {
+               StartCoroutine(DrinkViewOpen((int)info.type));
                 PlayerInfoManager.instance.drinkTypeList.Add((int)info.type);
             }
             //退出ボタンの状態を切り替える
@@ -237,14 +248,18 @@ namespace Bars
             {
                 firstFlag_ = false;
                 magDegree_ = 1.0f;
+                prevType_ = info.type;
                 return;
             }
             if (info.type != prevType_)
             {
                 magDegree_ = 1.5f;
-                prevType_ = info.type;
+            }else
+            {
+                magDegree_ = 1.0f;
+
             }
-            magDegree_ = 1.0f;
+            prevType_ = info.type;
         }
         //ボタンを押せるかどうか
         void PushButtonCheck(bool flag, Button button)
@@ -259,6 +274,16 @@ namespace Bars
                 button.interactable = false;
                 button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
             }
+        }
+
+        IEnumerator DrinkViewOpen(int no)
+        {
+            drinkImage_.transform.parent.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySE(drinkSE_);
+            drinkImage_.sprite = drinkSprite_[no];
+            yield return new WaitForSeconds(3f);
+
+            drinkImage_.transform.parent.gameObject.SetActive(false);
         }
     }
     
