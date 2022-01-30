@@ -20,8 +20,6 @@ namespace Data
             MAX
         }
 
-
-
         [SerializeField]
         private Text textData_;
         [SerializeField]
@@ -39,8 +37,7 @@ namespace Data
             alcoholDegree_ = degree;
             price_ = price;
             type_ = (AlcoholType)type;
-            string pathName =AssetDataPath.TexturesFile + AssetDataPath.AlcoholBtnSprite[type];
-            icon_.sprite = LoadSpriteData.LoadSprite(pathName);
+            icon_.sprite = LoadSpriteData.LoadSprite(AssetDataPath.AlcoholBtnSprite[type]);
 
         }
     }
