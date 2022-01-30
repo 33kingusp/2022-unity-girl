@@ -17,6 +17,7 @@ namespace Logics
         public int CurrentTurn { private set; get; } = 0;
         public GamePhase CurrentPhase { private set; get; } = GamePhase.Home;
         public int CurrentEndingId { private set; get; } = 0;
+        public int CurrentTurnGameSconre { private set; get; } = 0;
 
         /// <summary>
         /// フェイズの遷移を通知
@@ -50,6 +51,11 @@ namespace Logics
             CurrentEndingId = 0;
             CurrentPhase = GamePhase.Work;
             NextTurn();
+        }
+
+        public void SetGameScore(int score)
+        {
+            CurrentTurnGameSconre = score;
         }
 
         public void EndGame()
