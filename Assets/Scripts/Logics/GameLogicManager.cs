@@ -164,7 +164,7 @@ namespace Logics
             // 時間を退社時間に設定
             PlayerInfoManager.instance.actionCount.Value = LeaveTime;
             PlayerInfoManager.instance.drunkValue.Value = 0;
-            PlayerInfoManager.instance.stressValue.Value += 30;
+            //PlayerInfoManager.instance.stressValue.Value += 30;
             // 1点につき200円使えます
             PlayerInfoManager.instance.moneyValue.Value = CurrentGameScore * 200;
             Debug.Log($"時間：{PlayerInfoManager.instance.actionCount.Value}\n酔い値：{ PlayerInfoManager.instance.drunkValue.Value }\nストレス：{PlayerInfoManager.instance.stressValue.Value}\n所持金：{PlayerInfoManager.instance.moneyValue.Value}");
