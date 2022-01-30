@@ -47,8 +47,23 @@ namespace Logics
                 .AddTo(gameObject);
 
             CurrentTurn = 0;
+            CurrentEndingId = 0;
             CurrentPhase = GamePhase.Work;
             NextTurn();
+        }
+
+        public void EndGame()
+        {
+            SceneTransitionManager.Instance.LoadSceneWithFade("TitleScene", 3f);
+            SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
+                .Where(scene => scene == "TitileScene")
+                .Subscribe(_ => 
+                {
+                    CurrentTurn = 0;
+                    CurrentEndingId = 0;
+                    CurrentPhase = GamePhase.Work;
+                }
+                ).AddTo(gameObject);            
         }
 
         /// <summary>

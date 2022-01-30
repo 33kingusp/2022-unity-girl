@@ -81,6 +81,7 @@ namespace Results
         private IEnumerator EndingEndFlow()
         {
             yield return FadeOut();
+            GameLogicManager.instance.EndGame();
         }
 
         private IEnumerator FadeIn()

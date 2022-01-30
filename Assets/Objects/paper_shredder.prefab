@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5011996531067119915}
   - component: {fileID: -8787914260510374532}
   - component: {fileID: -5158013931255727283}
+  - component: {fileID: 9042414024325370170}
   m_Layer: 8
   m_Name: paper_shredder
   m_TagString: shredder
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3157363326163213605}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 2750613990145791341}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: c315f9c172f76fb40b962d582b872865, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -124,6 +125,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paperInfo: []
+--- !u!210 &9042414024325370170
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3157363326163213605}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 3
 --- !u!1001 &1020046345640296618
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,6 +143,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5453462044245547290}
     m_Modifications:
+    - target: {fileID: 1040053960021378811, guid: 80c49051e5c46034db49e14affb09050, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2885622529765889477, guid: 80c49051e5c46034db49e14affb09050, type: 3}
       propertyPath: m_Name
       value: tray_shredder
@@ -138,6 +154,10 @@ PrefabInstance:
     - target: {fileID: 2885622529765889477, guid: 80c49051e5c46034db49e14affb09050, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2885622529765889478, guid: 80c49051e5c46034db49e14affb09050, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2885622529765889479, guid: 80c49051e5c46034db49e14affb09050, type: 3}
       propertyPath: m_RootOrder
@@ -161,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2885622529765889479, guid: 80c49051e5c46034db49e14affb09050, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2885622529765889479, guid: 80c49051e5c46034db49e14affb09050, type: 3}
       propertyPath: m_LocalRotation.w

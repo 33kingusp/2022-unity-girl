@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 5538375016981844326}
   - component: {fileID: 5538375016981844327}
   - component: {fileID: 5538375016981844329}
+  - component: {fileID: 5203393553152582225}
   m_Layer: 0
   m_Name: tray_purple
   m_TagString: purple
@@ -277,6 +278,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.44, y: 1.87}
   m_EdgeRadius: 0
+--- !u!210 &5203393553152582225
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5538375016981844324}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &5538375017741579690
 GameObject:
   m_ObjectHideFlags: 0

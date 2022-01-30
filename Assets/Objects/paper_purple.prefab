@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1178771536564401539}
   - component: {fileID: 5422139767449051835}
+  - component: {fileID: 2225954811482099131}
   m_Layer: 8
   m_Name: tray_mark_p
   m_TagString: Untagged
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 76cd3716cab5d8248ad355d873add7eb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -82,6 +83,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &2225954811482099131
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899148880298973344}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 4
 --- !u!1 &7661420804489409701
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +106,7 @@ GameObject:
   - component: {fileID: 7661420804489409700}
   - component: {fileID: 6204774197860502191}
   - component: {fileID: -8771017464797502780}
+  - component: {fileID: 8566661816003877915}
   m_Layer: 8
   m_Name: paper_purple
   m_TagString: purple
@@ -155,7 +168,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: c315f9c172f76fb40b962d582b872865, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -206,3 +219,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paperInfo: []
+--- !u!210 &8566661816003877915
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7661420804489409701}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 3
