@@ -23,7 +23,7 @@ namespace Bars
         }
 
         private const int CloseActionCount = 24;       //帰宅時間
-        private static readonly int[] GiveUpDrunkValue = { 0,18,36,50 } ;    //酔いの限界値
+        private static readonly int[] GiveUpDrunkValue = { 0, 18, 36, 50 };    //酔いの限界値
 
         [SerializeField]
         private GameObject buttonObj_;
@@ -57,7 +57,7 @@ namespace Bars
                 obj.transform.localScale = Vector3.one;
                 //お酒の情報を登録する
                 BaseAlcohol alcoholInfo = obj.GetComponent<BaseAlcohol>();
-                alcoholInfo.SetInfo(AssetDataPath.AlcoholName[i], AssetDataPath.AlcoholDegree[i], AssetDataPath.AlcoholPrice[i], i,alcoholBtnSprite_[i]);
+                alcoholInfo.SetInfo(AssetDataPath.AlcoholName[i], AssetDataPath.AlcoholDegree[i], AssetDataPath.AlcoholPrice[i], i, alcoholBtnSprite_[i]);
                 //押した際の処理を登録する
                 Button button = obj.GetComponent<Button>();
                 button.onClick.AddListener(() => { PushButton(alcoholInfo, button); });
@@ -103,20 +103,20 @@ namespace Bars
 
             DrunkCharacterImage();
             //退出ボタン以外の情報は保持する
-            if(info.type!=BaseAlcohol.AlcoholType.EXIT)
+            if (info.type != BaseAlcohol.AlcoholType.EXIT)
             {
                 PlayerInfoManager.instance.drinkTypeList.Add((int)info.type);
             }
 
             //メッセージを更新する
-            gameText_.text=ViewGameMessage(info);
+            gameText_.text = ViewGameMessage(info);
 
             if (useExitButton(button))
             {
                 exitButtonFlag_.Value = true;
             }
             //強制的にシーン遷移を行う処理
-            if (CheckBarClose() || CheckDrunkValue()||info.type==BaseAlcohol.AlcoholType.EXIT)
+            if (CheckBarClose() || CheckDrunkValue() || info.type == BaseAlcohol.AlcoholType.EXIT)
             {
                 GameLogicManager.instance.NextPhase();
                 //シーン遷移を行い、家に帰る
@@ -168,7 +168,8 @@ namespace Bars
                 if (PlayerInfoManager.instance.drunkValue.Value > GiveUpDrunkValue[i])
                 {
                     charaImg_.sprite = charaSprite_[i];
-                }else
+                }
+                else
                 {
                     break;
                 }
