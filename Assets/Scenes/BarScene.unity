@@ -521,7 +521,6 @@ GameObject:
   - component: {fileID: 590450090}
   - component: {fileID: 590450089}
   - component: {fileID: 590450088}
-  - component: {fileID: 590450091}
   m_Layer: 5
   m_Name: Frame
   m_TagString: Untagged
@@ -613,20 +612,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590450086}
   m_CullTransparentMesh: 1
---- !u!114 &590450091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590450086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 701659cc871908b439505f8224d722e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonObj_: {fileID: 221758742}
-  gameText_: {fileID: 1171533441}
 --- !u!1 &634072683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1150,7 @@ GameObject:
   - component: {fileID: 1788985938}
   - component: {fileID: 1788985937}
   - component: {fileID: 1788985936}
+  - component: {fileID: 1788985940}
   m_Layer: 5
   m_Name: BarMenu
   m_TagString: Untagged
@@ -1253,6 +1239,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1788985940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788985935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701659cc871908b439505f8224d722e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonObj_: {fileID: 221758742}
+  gameText_: {fileID: 1171533441}
+  alcoholBtnSprite_:
+  - {fileID: 21300000, guid: 333198584d177bb4aa84263e1a33358f, type: 3}
+  - {fileID: 21300000, guid: cacc3bb9c3d92304c8dbc4c62f3d8b79, type: 3}
+  - {fileID: 21300000, guid: 375c937ad7a76e040856cef4da6b8626, type: 3}
+  - {fileID: 21300000, guid: d237fe670accf8640ab5d90eaae35846, type: 3}
+  - {fileID: 21300000, guid: c673e34d76fcdad4181d62e25b4b1473, type: 3}
+  - {fileID: 21300000, guid: 5d2cc8c7770c13840817101fa1cb0152, type: 3}
+  btnBackSprite_:
+  - {fileID: 21300000, guid: 322e2f332a14b514aa26947673318f95, type: 3}
+  - {fileID: 21300000, guid: 1dc400c62856b5845a8d39c0f96a8bf5, type: 3}
+  charaSprite_:
+  - {fileID: 21300000, guid: b7489621c7ca30f47bdd559174e104fc, type: 3}
+  - {fileID: 21300000, guid: c07c0c99f8ddf8c40b3af0300322bdcc, type: 3}
+  - {fileID: 21300000, guid: 740492dc50f05624e9fa7905d4788507, type: 3}
+  charaImg_: {fileID: 1802666888}
 --- !u!1 &1802666886
 GameObject:
   m_ObjectHideFlags: 0
