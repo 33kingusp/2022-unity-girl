@@ -36,7 +36,11 @@ namespace Bars
         [SerializeField]
         private Sprite[] charaSprite_;
         [SerializeField]
+        private Sprite[] drinkSprite_;
+        [SerializeField]
         private Image charaImg_;
+        [SerializeField]
+        private Image drinkImage_;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
         private bool firstFlag_ = true;     
 
@@ -147,6 +151,7 @@ namespace Bars
             //退出ボタン以外の情報は保持する
             if (info.type != BaseAlcohol.AlcoholType.EXIT)
             {
+               StartCoroutine(DrinkViewOpen((int)info.type));
                 PlayerInfoManager.instance.drinkTypeList.Add((int)info.type);
             }
             //退出ボタンの状態を切り替える
@@ -265,6 +270,18 @@ namespace Bars
                 button.interactable = false;
                 button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
             }
+        }
+
+        IEnumerator DrinkViewOpen(int no)
+        {
+            drinkImage_.transform.parent.gameObject.SetActive(true);
+
+            drinkImage_.sprite = drinkSprite_[no];
+            yield return new WaitForSeconds(3f);
+
+            drinkImage_.transform.parent.gameObject.SetActive(false);
+
+
         }
     }
     
