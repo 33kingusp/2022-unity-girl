@@ -14,6 +14,8 @@ namespace Data
         private IntReactiveProperty stressValue_ = new IntReactiveProperty(30);    //ストレス
 
         private IntReactiveProperty actionCount_ = new IntReactiveProperty(18);    //現在時刻
+
+        private List<int> drinkTypeList_ = new List<int>();
         public IntReactiveProperty gameTurnCount
         {
             get
@@ -47,7 +49,7 @@ namespace Data
                 moneyValue_ = value;
             }
         }
-        public IntReactiveProperty currentTime
+        public IntReactiveProperty actionCount
         {
             get
             {
@@ -69,12 +71,25 @@ namespace Data
                 stressValue_ = value;
             }
         }
+
+        public List<int>drinkTypeList
+        {
+            get
+            {
+                return drinkTypeList_;
+            }
+            set
+            {
+                drinkTypeList_ = value;
+            }
+        }
+
         public void SetUp()
         {
             //PlayerInfoの表示
             if (this.transform.childCount == 0)
             {
-                GameObject obj = Instantiate((GameObject)Resources.Load("UI/PlayerInfo"));
+                GameObject obj = Instantiate((GameObject)Resources.Load(AssetDataPath.PlayerInfo));
                 obj.transform.parent = this.transform;
             }
         }
