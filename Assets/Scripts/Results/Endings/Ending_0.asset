@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4cbc4860b76aa6479f85fcd74bf2671, type: 3}
-  m_Name: BadEnd_0
+  m_Name: Ending_0
   m_EditorClassIdentifier: 
   _id: 0
-  _endName: "\u7DCA\u6025\u642C\u9001"
+  _endName: "\u30D0\u30C3\u30C9\u30A8\u30F3\u30C9\uFF1A\u7DCA\u6025\u642C\u9001"
   _endCardsprites:
   - {fileID: 21300000, guid: e1eb41063e008d141af011121036e218, type: 3}
   - {fileID: 21300000, guid: b959241517cf3cc4f91c986ffc9b6fa1, type: 3}

@@ -17,22 +17,23 @@ namespace Results
         [SerializeField] private Button _nextButton = default;
         [SerializeField] private Text _messageText = default;
 
-        [SerializeField] private EndingScriptableObject _ending = default;
+        [SerializeField] private EndingScriptableObject[] _endings = default;
+        private EndingScriptableObject _currentEnding = default;
 
         private Queue<string> _messageQueue = default;
 
         private void Start()
         {
-            Debug.Log("Start");
+            _currentEnding = _endings[GameLogicManager.instance.CurrentEndingId];
 
-            foreach (var sprites in _ending.EndCardsprites)
+            foreach (var sprites in _currentEnding.EndCardsprites)
             {
                 var image = Instantiate(_rawImageBase, _imageParent);
                 image.texture = sprites.texture;
             }
 
-            _messageQueue = new Queue<string>(_ending.Messages);
-            _messageQueue.Enqueue($"エンディング{_ending.Id}：{_ending.Name}");
+            _messageQueue = new Queue<string>(_currentEnding.Messages);
+            _messageQueue.Enqueue($"{_currentEnding.Name}");
 
             _nextButton.onClick.AsObservable()
                 .Subscribe(_ => NextMessage())
@@ -67,9 +68,9 @@ namespace Results
         {
             Debug.Log("EndingBeginFlow");
 
-            if (_ending.EndSound != null)
+            if (_currentEnding.EndSound != null)
             {
-                AudioManager.Instance.PlaySE(_ending.EndSound);
+                AudioManager.Instance.PlaySE(_currentEnding.EndSound);
             }
             yield return FadeIn();
 
