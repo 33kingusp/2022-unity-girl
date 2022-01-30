@@ -22,6 +22,9 @@ namespace Data
         public static readonly string BtnNotPush = "btn_bg_blue_forbidden.png";
         public static readonly string BtnPush = "btn_bg_blue.png";
 
+        //Resourceフォルダからの呼出し
+        public static readonly string PlayerInfo = "UI/PlayerInfo";
+
         public static readonly string[] GameLog ={
             //"今日もがんばるよ〜♪",
             //"お仕事ちゃんとできた！",
