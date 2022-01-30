@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 using UniRx;
 using UniRx.Triggers;
 using Data;
+using Logics;
+using Utilities;
 
 namespace Bars
 {
@@ -21,11 +23,9 @@ namespace Bars
         private Text gameText_;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
 
-        // Start is called before the first frame update
         void Start()
         {
             CreateAlcoholButton();
-
         }
 
         // Update is called once per frame
@@ -51,7 +51,7 @@ namespace Bars
                 button.onClick.AddListener(() => { PushButton(alcoholInfo, button); });
 
                 //退出ボタンは押せないようにする
-                if (alcoholInfo.type_ == BaseAlcohol.AlcoholType.EXIT)
+                if (alcoholInfo.type == BaseAlcohol.AlcoholType.EXIT)
                 {
                     //ボタンを押せない状態にする
                     exitButtonFlag_.Subscribe(flag =>
@@ -78,16 +78,22 @@ namespace Bars
             //ボタンの選択解除する為の処理
             EventSystem.current.SetSelectedGameObject(null);
             //もし所持金が足りなかったら
-            if (PlayerInfoManager.instance.moneyValue.Value - info.price_ < 0)
+            if (PlayerInfoManager.instance.moneyValue.Value - info.price < 0)
             {
                 //ボタンクリックの処理は行わない
                 return;
             }
 
-            PlayerInfoManager.instance.moneyValue.Value -= info.price_;
-            PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree_; ;
-            PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree_; ;
-            PlayerInfoManager.instance.currentTime.Value++;
+            PlayerInfoManager.instance.moneyValue.Value -= info.price;
+            PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree; ;
+            PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree; ;
+            PlayerInfoManager.instance.actionCount.Value++;
+
+            //退出ボタン以外の情報は保持する
+            if(info.type!=BaseAlcohol.AlcoholType.EXIT)
+            {
+                PlayerInfoManager.instance.drinkTypeList.Add((int)info.type);
+            }
 
             //メッセージを更新する
             gameText_.text=ViewGameMessage(info);
@@ -99,6 +105,7 @@ namespace Bars
             //強制的にシーン遷移を行う処理
             if (CheckBarClose() || CheckDrunkValue())
             {
+                GameLogicManager.instance.NextPhase();
                 //シーン遷移を行い、家に帰る
             }
 
@@ -117,7 +124,7 @@ namespace Bars
         //帰宅時間かどうか
         private bool CheckBarClose()
         {
-            if (PlayerInfoManager.instance.currentTime.Value < CloseActionCount)
+            if (PlayerInfoManager.instance.actionCount.Value < CloseActionCount)
             {
                 return false;
             }
@@ -137,7 +144,7 @@ namespace Bars
         //押したボタンに応じてメッセージを変更する
         string ViewGameMessage(BaseAlcohol alcohol)
         {
-            return AssetDataPath.GameLog[(int)alcohol.type_];
+            return AssetDataPath.GameLog[(int)alcohol.type];
         }
 
     }

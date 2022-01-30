@@ -30,7 +30,7 @@ namespace Data
             //UI値変更時にCanvas上のUIも変更処理を行う
 
             PlayerInfoManager.instance.gameTurnCount.Subscribe(_ => gameTurnCount_.text = _.ToString());
-            PlayerInfoManager.instance.currentTime.Subscribe(_=>MoveHandClock(_));
+            PlayerInfoManager.instance.actionCount.Subscribe(_=>MoveHandClock(_));
             PlayerInfoManager.instance.stressValue.Subscribe(_ => UpdateStressGage(_));
             maxGageValue_ = PlayerInfoManager.instance.stressValue.Value;
         }
@@ -42,7 +42,7 @@ namespace Data
             PlayerInfoManager.instance.drunkValue.Value = drunk;
             PlayerInfoManager.instance.moneyValue.Value = money;
             PlayerInfoManager.instance.stressValue.Value = stress;
-            PlayerInfoManager.instance.currentTime.Value = 18;
+            PlayerInfoManager.instance.actionCount.Value = 18;
         }
 
         //時計の針を動かす
