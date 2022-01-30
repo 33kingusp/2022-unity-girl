@@ -18,6 +18,8 @@ namespace Works
         private float time; // 経過時間を格納する変数
         private Text timerText;
         private const float timeUp = 30.0f;
+        private bool beingMeasured; // 計測中であることを表す変数
+        private bool gameOver = false; // ゲームオーバーフラグ
 
         // Start is called before the first frame update
         void Start()
@@ -37,23 +39,28 @@ namespace Works
             time = 0.0f;
             GameObject time_object = GameObject.Find("Time");
             timerText = time_object.GetComponent<Text>();
-            timerText.text = "Time : 0";
+            timerText.text = "Time : 30";
+            beingMeasured = false;
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (Input.GetMouseButtonUp(0)) { beingMeasured = true; }
+            if (!beingMeasured) { return; }
             // 時間計測
             time += Time.deltaTime;
             float text_time = Mathf.Max(0, timeUp - time);
             timerText.text = "Time : " + text_time.ToString("0");
             // 時間切れ→シーン遷移
-            if(timerText < 0)
+            if(text_time <= 0 && !gameOver)
             {
+                gameOver = true;
                 GameLogicManager.instance.NextPhase();
             }
         }
-
+        
+        // スコア変動 (+ val)
         public void changeScore(int val)
         {
             score += val;
@@ -65,10 +72,17 @@ namespace Works
             score_text.text = "Score : " + score;
         }
 
+        // 紙生成
         public void createPaper(Vector3 pos)
         {
             GameObject paper = Instantiate(_paperInfo[(int)Random.Range(0, _paperInfo.Length)]);
             paper.transform.position = pos;
+        }
+
+        // score GET
+        public int getScore()
+        {
+            return score;
         }
     }
 }
