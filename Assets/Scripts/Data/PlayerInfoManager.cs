@@ -105,6 +105,9 @@ namespace Data
             }
         }
 
-
+        public void Clean()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
