@@ -19,11 +19,12 @@ namespace Bars
             NORMAL,
             SOFT,
             HARD,
+            GIVE,
             MAX
         }
 
         private const int CloseActionCount = 24;       //‹A‘îŠÔ
-        private static readonly int[] GiveUpDrunkValue = { 0, 18, 36, 50 };    //Œ‚¢‚ÌŒÀŠE’l
+        private static readonly int[] GiveUpDrunkValue = { 0,9, 23, 36, 50 };    //Œ‚¢‚ÌŒÀŠE’l
 
         [SerializeField]
         private GameObject buttonObj_;

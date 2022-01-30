@@ -1491,6 +1491,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1dc400c62856b5845a8d39c0f96a8bf5, type: 3}
   charaSprite_:
   - {fileID: 21300000, guid: b7489621c7ca30f47bdd559174e104fc, type: 3}
+  - {fileID: 21300000, guid: b7489621c7ca30f47bdd559174e104fc, type: 3}
   - {fileID: 21300000, guid: c07c0c99f8ddf8c40b3af0300322bdcc, type: 3}
   - {fileID: 21300000, guid: 740492dc50f05624e9fa7905d4788507, type: 3}
   drinkSprite_:
