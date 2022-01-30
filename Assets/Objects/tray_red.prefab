@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 3835658261861199419}
   - component: {fileID: 3835658261861199418}
   - component: {fileID: 3835658261861199420}
+  - component: {fileID: 4439793734633553204}
   m_Layer: 0
   m_Name: tray_red
   m_TagString: red
@@ -195,6 +196,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.44, y: 1.87}
   m_EdgeRadius: 0
+--- !u!210 &4439793734633553204
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3835658261861199417}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &6554932410295892316
 GameObject:
   m_ObjectHideFlags: 0
