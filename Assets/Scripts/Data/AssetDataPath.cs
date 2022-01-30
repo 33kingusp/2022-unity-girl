@@ -6,18 +6,23 @@ namespace Data
 {
     public class AssetDataPath
     {
+        public static string TexturesFile = Application.dataPath + "/Textures/";
+
         public static readonly string[] AlcoholName = { "水", "ビール", "ワイン", "日本酒", "カクテル", "退出" };
         public static readonly int[] AlcoholDegree = { 0, 5, 12, 15, 20, 0 };
         public static readonly int[] AlcoholPrice = { 0, 500, 600, 800, 800, 0 };
 
-        public static readonly string[] SpritePath = {
-        "btn_water.png",
-        "btn_beer.png",
-        "btn_wine.png",
-        "btn_sake.png",
-        "btn_cocktail.png",
-        "btn_exit.png",
-    };
+        public static readonly string[] AlcoholBtnSprite =
+            {
+                "btn_water.png",
+                "btn_beer.png",
+                "btn_wine.png",
+                "btn_sake.png",
+                "btn_cocktail.png",
+                "btn_exit.png",
+            };
+        public static readonly string BtnNotPush = "btn_bg_blue_forbidden.png";
+        public static readonly string BtnPush = "btn_bg_blue.png";
 
         public static readonly string[] GameLog ={
             //"今日もがんばるよ〜♪",
