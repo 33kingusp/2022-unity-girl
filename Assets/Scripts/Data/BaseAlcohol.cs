@@ -73,14 +73,14 @@ namespace Data
                 type_ = value;
             }
         }
-        public void SetInfo(string name, int degree, int price, int type)
+        public void SetInfo(string name, int degree, int price, int type,Sprite sprite)
         {
             alcoholName_ = name;
             textData_.text = name;
             alcoholDegree_ = degree;
             price_ = price;
             type_ = (AlcoholType)type;
-            icon_.sprite = LoadSpriteData.LoadSprite(AssetDataPath.AlcoholBtnSprite[type]);
+            icon_.sprite = sprite;
 
         }
     }

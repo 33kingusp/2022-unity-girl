@@ -19,6 +19,13 @@ namespace Data
                 "btn_cocktail.png",
                 "btn_exit.png",
             };
+        public static readonly string[] CharacterViewSprite =
+            {
+                "bar_girl1_normal.png",
+                "bar_girl2_normal.png",
+                "bar_girl3_normal.png",
+            };
+
         public static readonly string BtnNotPush = "btn_bg_blue_forbidden.png";
         public static readonly string BtnPush = "btn_bg_blue.png";
 
