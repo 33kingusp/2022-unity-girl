@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startButton: {fileID: 1265089282}
+  _acceptSE: {fileID: 8300000, guid: 719a04f4ab8b043d4a4c6ba96caa05d9, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

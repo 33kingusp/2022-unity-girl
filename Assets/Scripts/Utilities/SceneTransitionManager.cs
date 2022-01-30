@@ -78,6 +78,8 @@ namespace Utilities
         {
             yield return FadeIn(fadeTime);
 
+            _onFinishedFadeIn.OnNext(sceneName);
+
             var async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
 
             while (!async.isDone)

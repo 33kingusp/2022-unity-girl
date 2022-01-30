@@ -26,6 +26,11 @@ namespace Logics
         private void OnEnable()
         {
             _onChangeCurrentPhase = new Subject<GamePhase>();
+
+            this.ObserveEveryValueChanged(_ => CurrentTurn)
+                .Where(_ => PlayerInfoManager.instance != null)
+                .Subscribe(_ => PlayerInfoManager.instance.gameTurnCount.Value = CurrentTurn)
+                .AddTo(gameObject);
         }
 
         private void OnDisable()
@@ -35,6 +40,11 @@ namespace Logics
 
         public void StartGame()
         {
+            SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
+                .First()
+                .Subscribe(_ => PlayerInfoManager.instance.SetUp())
+                .AddTo(gameObject);
+
             CurrentTurn = 0;
             CurrentPhase = GamePhase.Work;
             NextTurn();
@@ -45,12 +55,20 @@ namespace Logics
         /// </summary>
         public void NextTurn()
         {
-            CurrentTurn++;
-            CurrentPhase = GamePhase.Work;
-            OnBeginWorkPhase();
-            _onChangeCurrentPhase.OnNext(CurrentPhase);
-            AudioManager.Instance.StopBGM(1.5f);
+            AudioManager.Instance.StopBGMAsObservable(1.5f);
             SceneTransitionManager.Instance.LoadSceneWithFade("MiniGameScene", 2f);
+
+            SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
+                .Where(scene => scene == "MiniGameScene")
+                .First()
+                .Subscribe(_ =>
+                {
+                    CurrentTurn++;
+                    CurrentPhase = GamePhase.Work;
+                    OnBeginWorkPhase();
+                    _onChangeCurrentPhase.OnNext(CurrentPhase);
+                })
+                .AddTo(gameObject);
         }
 
         /// <summary>
@@ -60,19 +78,35 @@ namespace Logics
         {
             if (CurrentPhase == GamePhase.Work)
             {
-                CurrentPhase = GamePhase.Bar;
-                OnBeginBarPhase();
-                _onChangeCurrentPhase.OnNext(CurrentPhase);
                 AudioManager.Instance.StopBGM(1.5f);
                 SceneTransitionManager.Instance.LoadSceneWithFade("BarScene", 2f);
+
+                SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
+                    .Where(scene => scene == "BarScene")
+                    .First()
+                    .Subscribe(_ =>
+                    {
+                        CurrentPhase = GamePhase.Bar;
+                        OnBeginBarPhase();
+                        _onChangeCurrentPhase.OnNext(CurrentPhase);
+                    })
+                    .AddTo(gameObject);
             }
             else if (CurrentPhase == GamePhase.Bar)
             {
-                CurrentPhase = GamePhase.Home;
-                OnBeginHomePhase();
-                _onChangeCurrentPhase.OnNext(CurrentPhase);
                 AudioManager.Instance.StopBGM(1.5f);
                 SceneTransitionManager.Instance.LoadSceneWithFade("HomeScene", 2f);
+
+                SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
+                    .Where(scene => scene == "HomeScene")
+                    .First()
+                    .Subscribe(_ =>
+                    {
+                        CurrentPhase = GamePhase.Home;
+                        OnBeginHomePhase();
+                        _onChangeCurrentPhase.OnNext(CurrentPhase);
+                    })
+                    .AddTo(gameObject);
             }
             else if (CurrentPhase == GamePhase.Home)
             {

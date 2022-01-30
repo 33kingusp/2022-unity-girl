@@ -40,6 +40,11 @@ namespace Utilities
             _bgmAudioSource.Stop();
         }
 
+        public void StopBGM(float time)
+        {
+            StopBGMAsObservable(time).Subscribe().AddTo(gameObject);
+        }
+
         public void PlaySE(AudioClip seClip)
         {
             _seAudioSource.PlayOneShot(seClip);
@@ -61,7 +66,7 @@ namespace Utilities
         /// </summary>
         /// <param name="fadeTime">フェードアウトする時間</param>
         /// <returns></returns>
-        public IObservable<Unit> StopBGM(float fadeTime = 0f)
+        public IObservable<Unit> StopBGMAsObservable(float fadeTime = 0f)
         {
             return Observable.FromCoroutine<Unit>(observer => StopBGMCoroutine(observer, fadeTime));
         }
