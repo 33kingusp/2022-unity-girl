@@ -62,6 +62,7 @@ namespace Logics
                     CurrentTurn = 0;
                     CurrentEndingId = 0;
                     CurrentPhase = GamePhase.Work;
+                    PlayerInfoManager.instance.Clean();
                 }
                 ).AddTo(gameObject);            
         }
