@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using Logics;
+using Utilities;
 
 namespace Works
 {
@@ -34,6 +35,10 @@ namespace Works
         private GameObject shredder_child;  // シュレッダー子オブジェクト
         private GameObject shredder_child2; // シュレッダー子オブジェクト2
 
+        [SerializeField] private AudioClip _bgm = default;
+        [SerializeField] private AudioClip _putDownPaper = default;
+        [SerializeField] private AudioClip _shred = default;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -63,6 +68,8 @@ namespace Works
             GameObject shredder_obj = GameObject.Find("tray_shredder");
             shredder_child = shredder_obj.transform.GetChild(0).gameObject;
             shredder_child2 = shredder_obj.transform.GetChild(1).gameObject;
+
+            AudioManager.Instance.PlayBGM(_bgm);
         }
 
         // Update is called once per frame
@@ -108,6 +115,7 @@ namespace Works
             Text score_text = score_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score : " + score;
+
         }
 
         // 紙生成
@@ -159,6 +167,7 @@ namespace Works
                         GameObject child = tray.transform.GetChild(paperChildNum3).gameObject;
                         child.SetActive(true);
                     }
+                    AudioManager.Instance.PlaySE(_putDownPaper);
                     break;
                 case "green":
                     _paperCnt[green]++;
@@ -180,6 +189,7 @@ namespace Works
                         GameObject child = tray.transform.GetChild(paperChildNum3).gameObject;
                         child.SetActive(true);
                     }
+                    AudioManager.Instance.PlaySE(_putDownPaper);
                     break;
                 case "blue":
                     _paperCnt[blue]++;
@@ -201,6 +211,7 @@ namespace Works
                         GameObject child = tray.transform.GetChild(paperChildNum3).gameObject;
                         child.SetActive(true);
                     }
+                    AudioManager.Instance.PlaySE(_putDownPaper);
                     break;
                 case "black":
                     _paperCnt[black]++;
@@ -222,6 +233,7 @@ namespace Works
                         GameObject child = tray.transform.GetChild(paperChildNum3).gameObject;
                         child.SetActive(true);
                     }
+                    AudioManager.Instance.PlaySE(_putDownPaper);
                     break;
                 case "white":
                     _paperCnt[white]++;
@@ -243,6 +255,7 @@ namespace Works
                         GameObject child = tray.transform.GetChild(paperChildNum3).gameObject;
                         child.SetActive(true);
                     }
+                    AudioManager.Instance.PlaySE(_putDownPaper);
                     break;
                 case "purple":
                     _paperCnt[purple]++;
@@ -264,12 +277,14 @@ namespace Works
                         GameObject child = tray.transform.GetChild(paperChildNum3).gameObject;
                         child.SetActive(true);
                     }
+                    AudioManager.Instance.PlaySE(_putDownPaper);
                     break;
                 case "shredder":
                     shredder_child.SetActive(true);     // シュレッダー子オブジェクト表示
                     shredder_child2.SetActive(true);    // シュレッダー子オブジェクト2表示
                     shredderAnimF = true;       // アニメーション開始
                     shredderTime = shredderAnimTime;    // シュレッダー計測時間初期化
+                    AudioManager.Instance.PlaySE(_shred);
                     break;
             }
         }
