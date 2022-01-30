@@ -56,13 +56,13 @@ namespace Logics
         {
             SceneTransitionManager.Instance.LoadSceneWithFade("TitleScene", 3f);
             SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
-                .Where(scene => scene == "TitileScene")
+                .Where(scene => scene == "TitleScene")
+                .First()
                 .Subscribe(_ => 
                 {
                     CurrentTurn = 0;
                     CurrentEndingId = 0;
                     CurrentPhase = GamePhase.Work;
-                    PlayerInfoManager.instance.Clean();
                 }
                 ).AddTo(gameObject);            
         }
