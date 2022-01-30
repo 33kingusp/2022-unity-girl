@@ -59,14 +59,12 @@ namespace Bars
                         if (flag)
                         {
                             button.interactable = true;
-                            string pathName = AssetDataPath.TexturesFile+ AssetDataPath.BtnPush;
-                            button.transform.GetComponent<Image>().sprite= Utilities.LoadSpriteData.LoadSprite(pathName);
+                            button.transform.GetComponent<Image>().sprite= Utilities.LoadSpriteData.LoadSprite(AssetDataPath.BtnPush);
                         }
                         else
                         {
                             button.interactable = false;
-                            string pathName = AssetDataPath.TexturesFile + AssetDataPath.BtnNotPush;
-                            button.transform.GetComponent<Image>().sprite = Utilities.LoadSpriteData.LoadSprite(pathName);
+                            button.transform.GetComponent<Image>().sprite = Utilities.LoadSpriteData.LoadSprite(AssetDataPath.BtnNotPush);
 
                         }
                     });
