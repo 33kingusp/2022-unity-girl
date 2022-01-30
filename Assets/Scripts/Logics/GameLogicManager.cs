@@ -154,8 +154,11 @@ namespace Logics
         /// </summary>
         private void OnBeginBarPhase()
         {
+            // TODO:仕事の結果を引き継ぐ            
             // 時間を退社時間に設定
             PlayerInfoManager.instance.actionCount.Value = LeaveTime;
+            PlayerInfoManager.instance.drunkValue.Value = 0;
+            PlayerInfoManager.instance.stressValue.Value += 30;
         }
 
         /// <summary>
@@ -181,6 +184,19 @@ namespace Logics
                 CurrentEndingId = 0;
                 return true;
             }
+            else if (CurrentTurn >= 7 && PlayerInfoManager.instance.stressValue.Value < 5)
+            {
+                // 7連勤後にストレス5以下
+                CurrentEndingId = 1;
+                return true;
+            }
+            else if (PlayerInfoManager.instance.stressValue.Value >= 100)
+            {
+                // ストレスがやばい
+                CurrentEndingId = 2;
+                return true;
+            }
+
             return false;
         }
     }
