@@ -5,7 +5,6 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
-/[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
@@ -59,3 +58,8 @@ sysinfo.txt
 crashlytics-build.properties
 
 UserSettings/EditorUserSettings.asset
+
+# WebGLだけ公開したい
+/[Bb]uild/*
+!/[Bb]uild/WebGL/
+!/[Bb]uild/WebGL/*
