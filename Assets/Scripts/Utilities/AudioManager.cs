@@ -27,9 +27,10 @@ namespace Utilities
             }
         }
 
-        public void PlayBGM(AudioClip bgmClip)
+        public void PlayBGM(AudioClip bgmClip, bool isLoop = true)
         {
             _bgmAudioSource.Stop();
+            _bgmAudioSource.loop = isLoop;
             _bgmAudioSource.clip = bgmClip;
             _bgmAudioSource.Play();
         }
@@ -37,6 +38,11 @@ namespace Utilities
         public void StopBGM()
         {
             _bgmAudioSource.Stop();
+        }
+
+        public void StopBGM(float time)
+        {
+            StopBGMAsObservable(time).Subscribe().AddTo(gameObject);
         }
 
         public void PlaySE(AudioClip seClip)
@@ -50,9 +56,9 @@ namespace Utilities
         /// <param name="bgmClip">再生するBGM</param>
         /// <param name="fadeTime">フェードインする時間</param>
         /// <returns></returns>
-        public IObservable<Unit> PlayBGMAsObservable(AudioClip bgmClip, float fadeTime = 0f)
+        public IObservable<Unit> PlayBGMAsObservable(AudioClip bgmClip, float fadeTime = 0f, bool isLoop = true)
         {
-            return Observable.FromCoroutine<Unit>(observer => PlayBGMCoroutine(observer, bgmClip, fadeTime));
+            return Observable.FromCoroutine<Unit>(observer => PlayBGMCoroutine(observer, bgmClip, fadeTime, isLoop));
         }
 
         /// <summary>
@@ -60,17 +66,18 @@ namespace Utilities
         /// </summary>
         /// <param name="fadeTime">フェードアウトする時間</param>
         /// <returns></returns>
-        public IObservable<Unit> StopBGM(float fadeTime = 0f)
+        public IObservable<Unit> StopBGMAsObservable(float fadeTime = 0f)
         {
             return Observable.FromCoroutine<Unit>(observer => StopBGMCoroutine(observer, fadeTime));
         }
 
 
-        private IEnumerator PlayBGMCoroutine(IObserver<Unit> observer, AudioClip bgmClip, float fadeTime)
+        private IEnumerator PlayBGMCoroutine(IObserver<Unit> observer, AudioClip bgmClip, float fadeTime, bool isLoop = true)
         {
             float t = 0;
 
             _bgmAudioSource.volume = 0;
+            _bgmAudioSource.loop = isLoop;
             _bgmAudioSource.clip = bgmClip;
             _bgmAudioSource.Play();
 

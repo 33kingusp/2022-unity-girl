@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - black
+  - blue
+  - purple
+  - white
+  - green
+  - red
+  - shredder
   layers:
   - Default
   - TransparentFX
@@ -12,9 +19,9 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
+  - Tray
+  - Paper
+  - Text
   - 
   - 
   - 
@@ -40,4 +47,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: TEXT
+    uniqueID: 498111473
+    locked: 0
+  - name: PAPER
+    uniqueID: 1615597485
     locked: 0
