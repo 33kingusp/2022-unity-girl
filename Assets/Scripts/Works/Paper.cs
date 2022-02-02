@@ -105,6 +105,10 @@ namespace Works
             Vector2 pointWorld = Camera.main.ScreenToWorldPoint(pointScreen);
 
             //objectÇÃà íuÇÅApointWorldÇ…Ç∑ÇÈ
+            pointWorld.x = Mathf.Min( 7.5f, pointWorld.x);
+            pointWorld.y = Mathf.Min( 4.0f, pointWorld.y);
+            pointWorld.x = Mathf.Max(-7.5f, pointWorld.x);
+            pointWorld.y = Mathf.Max(-4.0f, pointWorld.y);
             transform.position = pointWorld;
         }
     }

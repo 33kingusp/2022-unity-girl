@@ -17,6 +17,7 @@ namespace Logics
         public int CurrentTurn { private set; get; } = 0;
         public GamePhase CurrentPhase { private set; get; } = GamePhase.Home;
         public int CurrentEndingId { private set; get; } = 0;
+        public int CurrentGameScore { private set; get; } = 0;
 
         /// <summary>
         /// フェイズの遷移を通知
@@ -58,13 +59,18 @@ namespace Logics
             SceneTransitionManager.Instance.OnFinishedFadeInAsObservable
                 .Where(scene => scene == "TitleScene")
                 .First()
-                .Subscribe(_ => 
+                .Subscribe(_ =>
                 {
                     CurrentTurn = 0;
                     CurrentEndingId = 0;
                     CurrentPhase = GamePhase.Work;
                 }
-                ).AddTo(gameObject);            
+                ).AddTo(gameObject);
+        }
+
+        public void SetGameScore(int score)
+        {
+            CurrentGameScore = score;
         }
 
         /// <summary>
@@ -158,7 +164,10 @@ namespace Logics
             // 時間を退社時間に設定
             PlayerInfoManager.instance.actionCount.Value = LeaveTime;
             PlayerInfoManager.instance.drunkValue.Value = 0;
-            PlayerInfoManager.instance.stressValue.Value += 30;
+            //PlayerInfoManager.instance.stressValue.Value += 30;
+            // 1点につき200円使えます
+            PlayerInfoManager.instance.moneyValue.Value = CurrentGameScore * 200;
+            Debug.Log($"時間：{PlayerInfoManager.instance.actionCount.Value}\n酔い値：{ PlayerInfoManager.instance.drunkValue.Value }\nストレス：{PlayerInfoManager.instance.stressValue.Value}\n所持金：{PlayerInfoManager.instance.moneyValue.Value}");
         }
 
         /// <summary>
@@ -175,7 +184,7 @@ namespace Logics
             float drunk = Mathf.Max(PlayerInfoManager.instance.drunkValue.Value - ad, 0);
             PlayerInfoManager.instance.drunkValue.Value = (int)drunk;
         }
-    
+
         private bool IsFinishedGame()
         {
             if (PlayerInfoManager.instance.drunkValue.Value >= 60)

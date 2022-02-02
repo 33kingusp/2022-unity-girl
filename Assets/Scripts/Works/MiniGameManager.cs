@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using Logics;
+using Data;
 using Utilities;
 
 namespace Works
@@ -15,6 +16,8 @@ namespace Works
         private GameObject clickedDownGameObject;   // クリックダウン時オブジェクト
         private int[] _paperCnt;    // 紙のカウント
         private float time;         // 経過時間を格納する変数
+        private float clockTime;    // 経過時間を格納する変数(時計用)
+        private float stressTime;   // 経過時間を格納する変数(ストレス用)
         private Text timerText;
         private const float timeUp = 30.0f;
         private bool beingMeasured;     // 計測中であることを表す変数
@@ -56,7 +59,7 @@ namespace Works
             paper = Instantiate(_paperInfo[(int)Random.Range(0, _paperInfo.Length)]);
             paper.transform.position = defaultPos2;
             // 時間計測
-            time = 0.0f;
+            time = stressTime = clockTime = 0.0f;
             GameObject time_object = GameObject.Find("Time");
             timerText = time_object.GetComponent<Text>();
             timerText.text = "Time : " + timeUp;
@@ -91,16 +94,32 @@ namespace Works
                     shredderAnimF = false;
                 }
             }
-            if (Input.GetMouseButtonUp(0)) { beingMeasured = true; }
+            if (Input.GetMouseButtonDown(0)) { beingMeasured = true; }
+            if (gameOver) { return; }
             if (!beingMeasured) { return; }
             // 時間計測
             time += Time.deltaTime;
+            clockTime += Time.deltaTime;
+            stressTime += Time.deltaTime;
+            // 1秒ごとにストレス値を1上げる
+            if( stressTime >= 1.0f)
+            {
+                PlayerInfoManager.instance.stressValue.Value++;
+                stressTime = 0.0f;
+            }
+            // (ゲーム時間÷業務時間)秒ごとに時間を1進める
+            if( clockTime >= timeUp / 9 )
+            {
+                PlayerInfoManager.instance.actionCount.Value++;
+                clockTime = 0.0f;
+            }
             float text_time = Mathf.Max(0, timeUp - time);
             timerText.text = "Time : " + text_time.ToString("0");
             // 時間切れ→シーン遷移
             if(text_time <= 0 && !gameOver)
             {
                 gameOver = true;
+                GameLogicManager.instance.SetGameScore(score);
                 GameLogicManager.instance.NextPhase();
             }
         }
@@ -115,7 +134,6 @@ namespace Works
             Text score_text = score_object.GetComponent<Text>();
             // テキストの表示を入れ替える
             score_text.text = "Score : " + score;
-
         }
 
         // 紙生成

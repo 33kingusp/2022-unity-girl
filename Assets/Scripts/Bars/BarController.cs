@@ -19,11 +19,12 @@ namespace Bars
             NORMAL,
             SOFT,
             HARD,
+            GIVE,
             MAX
         }
 
         private const int CloseActionCount = 24;       //帰宅時間
-        private static readonly int[] GiveUpDrunkValue = { 0,18,36,50 } ;    //酔いの限界値
+        private static readonly int[] GiveUpDrunkValue = { 0,9, 23, 36, 50 };    //酔いの限界値
 
         [SerializeField]
         private GameObject buttonObj_;
@@ -36,9 +37,20 @@ namespace Bars
         [SerializeField]
         private Sprite[] charaSprite_;
         [SerializeField]
+        private Sprite[] drinkSprite_;
+        [SerializeField]
         private Image charaImg_;
+        [SerializeField]
+        private Image drinkImage_;
+        [SerializeField]
+        private AudioClip drinkSE_ = default;
         BoolReactiveProperty exitButtonFlag_ = new BoolReactiveProperty(false);
+        private bool firstFlag_ = true;     
 
+
+        private BaseAlcohol.AlcoholType prevType_=BaseAlcohol.AlcoholType.WATER;
+
+        private float magDegree_;          //お酒の倍率
         void Start()
         {
             CreateAlcoholButton();
@@ -57,7 +69,7 @@ namespace Bars
                 obj.transform.localScale = Vector3.one;
                 //お酒の情報を登録する
                 BaseAlcohol alcoholInfo = obj.GetComponent<BaseAlcohol>();
-                alcoholInfo.SetInfo(AssetDataPath.AlcoholName[i], AssetDataPath.AlcoholDegree[i], AssetDataPath.AlcoholPrice[i], i,alcoholBtnSprite_[i]);
+                alcoholInfo.SetInfo(AssetDataPath.AlcoholName[i], AssetDataPath.AlcoholDegree[i], AssetDataPath.AlcoholPrice[i], i, alcoholBtnSprite_[i]);
                 //押した際の処理を登録する
                 Button button = obj.GetComponent<Button>();
                 button.onClick.AddListener(() => { PushButton(alcoholInfo, button); });
@@ -75,11 +87,23 @@ namespace Bars
                         }
                         else
                         {
-                            button.interactable = false;
-                            button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
+                            if (PlayerInfoManager.instance.moneyValue.Value < AssetDataPath.AlcoholPrice[(int)BaseAlcohol.AlcoholType.BEER])
+                            {
+                                button.interactable = true;
+                                button.transform.GetComponent<Image>().sprite = btnBackSprite_[0];
+                            }
+                            else
+                            {
+                                button.interactable = false;
+                                button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
+                            }
 
                         }
                     });
+                }
+                else
+                {
+                    //PushButtonCheck(PlayerInfoManager.instance.moneyValue.Value >= alcoholInfo.price, button);
                 }
             }
         }
@@ -89,39 +113,62 @@ namespace Bars
         {
             //ボタンの選択解除する為の処理
             EventSystem.current.SetSelectedGameObject(null);
-            //もし所持金が足りなかったら
-            if (PlayerInfoManager.instance.moneyValue.Value - info.price < 0)
-            {
-                //ボタンクリックの処理は行わない
-                return;
-            }
-
-            PlayerInfoManager.instance.moneyValue.Value -= info.price;
-            PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree; ;
-            PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree; ;
-            PlayerInfoManager.instance.actionCount.Value++;
-
-            DrunkCharacterImage();
-            //退出ボタン以外の情報は保持する
-            if(info.type!=BaseAlcohol.AlcoholType.EXIT)
-            {
-                PlayerInfoManager.instance.drinkTypeList.Add((int)info.type);
-            }
 
             //メッセージを更新する
-            gameText_.text=ViewGameMessage(info);
+            gameText_.text = ViewGameMessage(info);
+            //金額が足りない場合は処理をしない
+            if (PlayerInfoManager.instance.moneyValue.Value - info.price < 0)
+            {
+                return;
+            }
+            //別のお酒を飲んだ場合の処理
+            DrinkAncoholType(info);
 
-            if (useExitButton(button))
+            PlayerInfoManager.instance.moneyValue.Value -= info.price;
+            if (prevType_ == BaseAlcohol.AlcoholType.WATER)
+            {
+                PlayerInfoManager.instance.drunkValue.Value += info.alcoholDegree;
+            }
+            else
+            {
+                int magValue = (int)(info.alcoholDegree * magDegree_);
+                PlayerInfoManager.instance.drunkValue.Value += magValue;
+
+            }
+            if (PlayerInfoManager.instance.stressValue.Value > 0)
+            {
+                PlayerInfoManager.instance.stressValue.Value -= info.alcoholDegree;
+                //マイナスになったら0に戻す
+                if (PlayerInfoManager.instance.stressValue.Value < 0)
+                {
+                    PlayerInfoManager.instance.stressValue.Value = 0;
+                }
+            }
+            PlayerInfoManager.instance.actionCount.Value++;
+
+            //PlayerInfo更新後の処理
+
+            //キャラクターの画像の切り替え判定
+            DrunkCharacterImage();
+
+
+            //退出ボタン以外の情報は保持する
+            if (info.type != BaseAlcohol.AlcoholType.EXIT)
+            {
+               StartCoroutine(DrinkViewOpen((int)info.type));
+                PlayerInfoManager.instance.drinkTypeList.Add((int)info.type);
+            }
+            //退出ボタンの状態を切り替える
+            if (useExitButton(button) || PlayerInfoManager.instance.moneyValue.Value < AssetDataPath.AlcoholPrice[(int)BaseAlcohol.AlcoholType.BEER])
             {
                 exitButtonFlag_.Value = true;
             }
             //強制的にシーン遷移を行う処理
-            if (CheckBarClose() || CheckDrunkValue()||info.type==BaseAlcohol.AlcoholType.EXIT)
+            if (CheckBarClose() || CheckDrunkValue() || info.type == BaseAlcohol.AlcoholType.EXIT)
             {
                 GameLogicManager.instance.NextPhase();
                 //シーン遷移を行い、家に帰る
             }
-
         }
 
         //退出ボタンを押せる状態かどうか
@@ -157,6 +204,23 @@ namespace Bars
         //押したボタンに応じてメッセージを変更する
         string ViewGameMessage(BaseAlcohol alcohol)
         {
+            if(PlayerInfoManager.instance.moneyValue.Value<alcohol.price)
+            {
+                return AssetDataPath.NotPushLog[(int)alcohol.type];
+
+            }
+
+          if(PlayerInfoManager.instance.moneyValue.Value < AssetDataPath.AlcoholPrice[(int)BaseAlcohol.AlcoholType.BEER])
+            {
+                if(alcohol.type==BaseAlcohol.AlcoholType.EXIT)
+                {
+                    return AssetDataPath.GameLog[(int)alcohol.type];
+                }else
+                {
+                    return AssetDataPath.NotPushLog[(int)alcohol.type];
+
+                }
+            }
             return AssetDataPath.GameLog[(int)alcohol.type];
         }
 
@@ -168,11 +232,60 @@ namespace Bars
                 if (PlayerInfoManager.instance.drunkValue.Value > GiveUpDrunkValue[i])
                 {
                     charaImg_.sprite = charaSprite_[i];
-                }else
+                }
+                else
                 {
                     break;
                 }
             }
         }
+
+        
+        //前と飲んだお酒と同じ種類だったら
+        void DrinkAncoholType(BaseAlcohol info)
+        {
+            if (firstFlag_)
+            {
+                firstFlag_ = false;
+                magDegree_ = 1.0f;
+                prevType_ = info.type;
+                return;
+            }
+            if (info.type != prevType_)
+            {
+                magDegree_ = 1.5f;
+            }else
+            {
+                magDegree_ = 1.0f;
+
+            }
+            prevType_ = info.type;
+        }
+        //ボタンを押せるかどうか
+        void PushButtonCheck(bool flag, Button button)
+        {
+            if (flag)
+            {
+                button.interactable = true;
+                button.transform.GetComponent<Image>().sprite = btnBackSprite_[0];
+            }
+            else
+            {
+                button.interactable = false;
+                button.transform.GetComponent<Image>().sprite = btnBackSprite_[1];
+            }
+        }
+
+        IEnumerator DrinkViewOpen(int no)
+        {
+            drinkImage_.transform.parent.gameObject.SetActive(true);
+            AudioManager.Instance.PlaySE(drinkSE_);
+            drinkImage_.sprite = drinkSprite_[no];
+            yield return new WaitForSeconds(3f);
+
+            drinkImage_.transform.parent.gameObject.SetActive(false);
+        }
     }
+    
+
 }

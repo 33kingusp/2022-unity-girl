@@ -8,7 +8,7 @@ namespace Data
     {
         public static readonly string[] AlcoholName = { "水", "ビール", "ワイン", "日本酒", "カクテル", "退出" };
         public static readonly int[] AlcoholDegree = { 0, 5, 12, 15, 20, 0 };
-        public static readonly int[] AlcoholPrice = { 0, 500, 600, 800, 800, 0 };
+        public static readonly int[] AlcoholPrice = { 0, 500, 600, 800, 1000, 0 };
 
         public static readonly string[] AlcoholBtnSprite =
             {
@@ -45,6 +45,14 @@ namespace Data
             "今日も疲れた〜〜",
             //"お酒おいしいなぁ",
             //"もう.......だめ....."
+        };
+        public static readonly string[] NotPushLog ={
+            "どうせお水しか飲めませんよ！",
+            "ビールすら買えないなんて...。",
+            "誰かワイン奢ってくれないかな？",
+            "お金があったら日本酒飲みたかった。",
+            "このカクテル高いんだけど!!",
+            "まだ帰りたくない!",
         };
     }
 }
