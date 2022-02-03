@@ -1,11 +1,13 @@
+using Data;
+using Logics;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
 using Utilities;
-using Logics;
-using Data;
+using Utilities.Audios;
+
 namespace Results
 {
     public class ResultSceneController : MonoBehaviour

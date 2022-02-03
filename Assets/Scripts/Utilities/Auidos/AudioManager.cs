@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-namespace Utilities
+namespace Utilities.Audios
 {
+    [DisallowMultipleComponent]
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager Instance { private set; get; }

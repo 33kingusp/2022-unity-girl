@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using Data;
+using Logics;
 using UnityEngine;
 using UnityEngine.UI;
-using UniRx;
-using Logics;
-using Data;
-using Utilities;
+using Utilities.Audios;
 
 namespace Works
 {
