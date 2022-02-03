@@ -10,8 +10,9 @@ namespace Data
     {
         private IntReactiveProperty gameTurnCount_ = new IntReactiveProperty(0);  //ゲームのターン数(プレイヤーが持つ？)
         private IntReactiveProperty drunkValue_ = new IntReactiveProperty(0);  //酔い値
-        private IntReactiveProperty moneyValue_ = new IntReactiveProperty(10000);    //予算
-        private IntReactiveProperty stressValue_ = new IntReactiveProperty(30);    //ストレス
+        private IntReactiveProperty moneyValue_ = new IntReactiveProperty(3000);    //予算
+        private IntReactiveProperty stressValue_ = new IntReactiveProperty(30);    //現在ストレス
+        private int maxStressValue_=100;                                          //ターンごとのストレスの最大値
 
         private IntReactiveProperty actionCount_ = new IntReactiveProperty(18);    //現在時刻
 
@@ -83,7 +84,17 @@ namespace Data
                 drinkTypeList_ = value;
             }
         }
-
+        public int maxStressValue
+        {
+            get
+            {
+                return maxStressValue_;
+            }
+            set
+            {
+                maxStressValue_ = value;
+            }
+        }
         public void SetUp()
         {
             //PlayerInfoの表示
@@ -94,6 +105,9 @@ namespace Data
             }
         }
 
-
+        public void Clean()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -21,7 +21,6 @@ namespace Data
         [SerializeField]
         private Slider stressSlider_;
 
-        private int maxGageValue_;
 
 
         // Start is called before the first frame update
@@ -32,7 +31,6 @@ namespace Data
             PlayerInfoManager.instance.gameTurnCount.Subscribe(_ => gameTurnCount_.text = _.ToString());
             PlayerInfoManager.instance.actionCount.Subscribe(_=>MoveHandClock(_));
             PlayerInfoManager.instance.stressValue.Subscribe(_ => UpdateStressGage(_));
-            maxGageValue_ = PlayerInfoManager.instance.stressValue.Value;
         }
 
         //シーン遷移時にプレイヤー情報を初期化(引き継ぎ)を行う
@@ -54,12 +52,8 @@ namespace Data
         //ストレスゲージを更新
         void UpdateStressGage(int value)
         {
-            float per = (float)value / (float)maxGageValue_;
+            float per = (float)value / (float)PlayerInfoManager.instance.maxStressValue;
             stressSlider_.value = per;
-            if(value<=0)
-            {
-                stressSlider_.transform.GetChild(1).gameObject.SetActive(false);
-            }
         }
     }
 }

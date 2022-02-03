@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9083805801445607912}
   - component: {fileID: 4261441002791170258}
+  - component: {fileID: 3650860268826033035}
   m_Layer: 0
   m_Name: tray_paper1
   m_TagString: Untagged
@@ -82,6 +83,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &3650860268826033035
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130419471473337680}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &6353697783683367335
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6353697783683367334}
   - component: {fileID: 6353697783683367337}
+  - component: {fileID: 6688511553252365304}
   m_Layer: 0
   m_Name: tray_mark_b
   m_TagString: blue
@@ -164,6 +177,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &6688511553252365304
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353697783683367335}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &6353697784358065138
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,6 +199,7 @@ GameObject:
   - component: {fileID: 6353697784358065140}
   - component: {fileID: 6353697784358065141}
   - component: {fileID: 6353697784358065143}
+  - component: {fileID: -3751973252570339357}
   m_Layer: 0
   m_Name: tray_blue
   m_TagString: blue
@@ -277,6 +302,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.44, y: 1.87}
   m_EdgeRadius: 0
+--- !u!210 &-3751973252570339357
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353697784358065138}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &7854394747668065577
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4217369342846852336}
   - component: {fileID: 8160300779831269113}
+  - component: {fileID: 6699653732025319384}
   m_Layer: 0
   m_Name: tray_paper2
   m_TagString: Untagged
@@ -359,6 +396,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &6699653732025319384
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854394747668065577}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
 --- !u!1 &8679101847356209927
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +417,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9052057477947955012}
   - component: {fileID: 1256616876643251470}
+  - component: {fileID: 7517738517335497161}
   m_Layer: 0
   m_Name: tray_paper3
   m_TagString: Untagged
@@ -441,3 +490,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &7517738517335497161
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8679101847356209927}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 3

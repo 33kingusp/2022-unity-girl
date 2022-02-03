@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2885622529765889479}
   - component: {fileID: 2885622529765889478}
+  - component: {fileID: 1040053960021378811}
   m_Layer: 0
   m_Name: tray_shredder
   m_TagString: shredder
@@ -84,6 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &1040053960021378811
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2885622529765889477}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &2896560861060069377
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2035371668034329286}
   - component: {fileID: 3939842408409980911}
+  - component: {fileID: 2371188590824783765}
   m_Layer: 0
   m_Name: tray_shredder_paper1
   m_TagString: Untagged
@@ -166,6 +179,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &2371188590824783765
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896560861060069377}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
 --- !u!1 &4372337414866261583
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5529328069053912138}
   - component: {fileID: 1999568221570116386}
+  - component: {fileID: 3504974472590151640}
   m_Layer: 0
   m_Name: tray_shredder_paper2
   m_TagString: Untagged
@@ -248,3 +273,14 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!210 &3504974472590151640
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4372337414866261583}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
