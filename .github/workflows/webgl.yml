@@ -13,6 +13,14 @@ jobs:
       - name: Check out my unity project.
         uses: actions/checkout@v2
 
+      # Cache
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
       # GameCI の Builder を利用して、
       # Unity プロジェクトのビルドを実行する
       - name: Run the WebGL build
@@ -35,7 +43,7 @@ jobs:
 
           # デプロイ用ビルドフォルダパスを指定する
           # GameCI の Builder はデフォルトでは build フォルダにビルド内容を出力する
-          folder: build
+          folder: abc
 
       # Builder で出力した WebGL ビルドをアーティファクトでダウンロード可能にする
       - name: Upload the WebGL Build
