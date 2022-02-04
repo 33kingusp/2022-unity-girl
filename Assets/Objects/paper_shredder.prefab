@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3157363326163213605}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
   - {fileID: 2750613990145791341}
   m_Father: {fileID: 0}
@@ -125,6 +125,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paperInfo: []
+  defaultPos: {x: 4, y: 0.5, z: -1}
+  defaultPos2: {x: 4, y: -3, z: -1}
 --- !u!210 &9042414024325370170
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -146,6 +148,10 @@ PrefabInstance:
     - target: {fileID: 1040053960021378811, guid: 80c49051e5c46034db49e14affb09050, type: 3}
       propertyPath: m_SortingOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502850732724931933, guid: 80c49051e5c46034db49e14affb09050, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2885622529765889477, guid: 80c49051e5c46034db49e14affb09050, type: 3}
       propertyPath: m_Name

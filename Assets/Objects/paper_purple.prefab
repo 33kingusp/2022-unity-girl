@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 7661420804489409701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
   - {fileID: 1178771536564401539}
   m_Father: {fileID: 0}
@@ -219,6 +219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paperInfo: []
+  defaultPos: {x: 4, y: 0.5, z: -1}
+  defaultPos2: {x: 4, y: -3, z: -1}
 --- !u!210 &8566661816003877915
 SortingGroup:
   m_ObjectHideFlags: 0

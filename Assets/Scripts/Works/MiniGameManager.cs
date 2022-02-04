@@ -42,8 +42,8 @@ namespace Works
         // Start is called before the first frame update
         void Start()
         {
-            defaultPos = new Vector3(4.5f, 0.5f, -1.0f);
-            defaultPos2 = new Vector3(4.5f, -3.0f, -1.0f);
+            defaultPos = new Vector3(4.0f, 0.5f, -1.0f);
+            defaultPos2 = new Vector3(4.0f, -3.0f, -1.0f);
             score = 0;
             // オブジェクトからTextコンポーネントを取得
             GameObject score_object = GameObject.Find("Score");
