@@ -6,7 +6,7 @@ Yui, a new graduate, is at work today. You're a bartender and you've been hired 
 # いますぐプレイ/Play Now!
 ブラウザでのプレイはこちら
 
-https://33kingusp.github.io/2022-unity-girl/Builds/WebGL/
+https://33kingusp.github.io/2022-unity-girl/WebGL/WebGL/
 
 # ダウンロード/Download
 windows版でのプレイはこちら

@@ -1,6 +1,8 @@
 name: Run the WebGL build
 on:
-  workflow_dispatch: {}
+  push:
+    branches:
+      - main
 jobs:
   build:
     name: Run the WebGL build
@@ -10,6 +12,14 @@ jobs:
       # Unity プロジェクトの中身をダウンロードしてくる
       - name: Check out my unity project.
         uses: actions/checkout@v2
+
+      # Cache
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
 
       # GameCI の Builder を利用して、
       # Unity プロジェクトのビルドを実行する
@@ -33,7 +43,7 @@ jobs:
 
           # デプロイ用ビルドフォルダパスを指定する
           # GameCI の Builder はデフォルトでは build フォルダにビルド内容を出力する
-          folder: Builds/WebGL
+          folder: build
 
       # Builder で出力した WebGL ビルドをアーティファクトでダウンロード可能にする
       - name: Upload the WebGL Build

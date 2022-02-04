@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System.IO;
-using UnityEngine.EventSystems;
-using UniRx;
-using UniRx.Triggers;
 using Data;
 using Logics;
-using Utilities;
+using System.Collections;
+using UniRx;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Utilities.Audios;
 
 namespace Bars
 {
@@ -65,7 +62,7 @@ namespace Bars
             for (int i = 0; i < (int)BaseAlcohol.AlcoholType.MAX; i++)
             {
                 GameObject obj = Instantiate((GameObject)Resources.Load("UI/AlcoholButton"));
-                obj.transform.parent = buttonObj_.transform;
+                obj.transform.SetParent(buttonObj_.transform);
                 obj.transform.localScale = Vector3.one;
                 //‚¨Žð‚Ìî•ñ‚ð“o˜^‚·‚é
                 BaseAlcohol alcoholInfo = obj.GetComponent<BaseAlcohol>();
