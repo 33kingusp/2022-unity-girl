@@ -9,8 +9,8 @@ namespace Works
     {
         private GameObject clickedDownGameObject;   // クリックダウン時オブジェクト
         [SerializeField] private GameObject[] paperInfo; // 紙情報配列
-        private Vector3 defaultPos = new Vector3(4.5f,  0.5f, -1.0f);
-        private Vector3 defaultPos2 = new Vector3(4.5f, -3.0f, -1.0f);
+        private Vector3 defaultPos = new Vector3(4.0f,  0.5f, -1.0f);
+        private Vector3 defaultPos2 = new Vector3(4.0f, -3.0f, -1.0f);
         private Vector3 tmpPos = new Vector3(7.0f, 1.5f, -1.0f);           // 座標保存用
         private MiniGameManager main;
         private bool gameOver = false;
@@ -19,7 +19,7 @@ namespace Works
         void Start()
         {
             tmpPos = defaultPos;
-            GameObject Game = GameObject.Find("Game");  // Game オブジェクト取得
+            GameObject Game = GameObject.Find("MiniGameManager");  // Game オブジェクト取得
             main = Game.GetComponent<MiniGameManager>();      // GameオブジェクトのMainスクリプト取得
         }
 

@@ -62,7 +62,7 @@ namespace Bars
             for (int i = 0; i < (int)BaseAlcohol.AlcoholType.MAX; i++)
             {
                 GameObject obj = Instantiate((GameObject)Resources.Load("UI/AlcoholButton"));
-                obj.transform.parent = buttonObj_.transform;
+                obj.transform.SetParent(buttonObj_.transform);
                 obj.transform.localScale = Vector3.one;
                 //‚¨Žð‚Ìî•ñ‚ð“o˜^‚·‚é
                 BaseAlcohol alcoholInfo = obj.GetComponent<BaseAlcohol>();
