@@ -411,6 +411,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4349875148530647750, guid: 94881e393a4321843b2ccc36e2d15717, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4926971477546015011, guid: 94881e393a4321843b2ccc36e2d15717, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
